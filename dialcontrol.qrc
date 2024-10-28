@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>dialcontrol/background.png</file>
+        <file>dialcontrol/Dial.qml</file>
+        <file>dialcontrol/dialcontrol.qml</file>
+        <file>dialcontrol/dialcontrol.qrc</file>
+        <file>dialcontrol/needle.png</file>
+        <file>dialcontrol/needle_shadow.png</file>
+        <file>dialcontrol/overlay.png</file>
+        <file>dialcontrol/quit.png</file>
+    </qresource>
+</RCC>
