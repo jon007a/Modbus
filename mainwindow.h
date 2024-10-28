@@ -10,7 +10,7 @@
 #include <QModbusReply>
 #include <QModbusRtuSerialClient>
 #include <QtGlobal>
-
+#include <QtSql/QSqlDatabase>
 
 #include "statistic.h" // Включаем заголовок Statistic
 
@@ -44,12 +44,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+
 private:
     Ui::MainWindow *ui;
     QQuickWidget *qmlWidget; // Добавляем QQuickWidget как член класса
     QModbusClient *modbusDevice; //Клиент для работы с модбас
     void setupModbusClient();
+    void setupDatabaseConnection(); // Метод для настройки подключения к БД
     Statistic *statisticsWindow = nullptr; // Указатель на окно статистики
+    QSqlDatabase db;
+    void insertFanSpeedToDatabase(int fanSpeed);
 
 };
 

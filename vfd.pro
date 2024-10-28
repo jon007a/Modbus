@@ -3,7 +3,7 @@ QT += serialport
 QT += quick qml quickcontrols2
 QT += serialbus
 QT += quick quickwidgets
-QT += charts
+QT += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -16,14 +16,12 @@ SOURCES += \
     connectionsettings.cpp \
     main.cpp \
     mainwindow.cpp \
-    qcustomplot.cpp \
     statistic.cpp \
 
 
 HEADERS += \
     connectionsettings.h \
     mainwindow.h \
-    qcustomplot.h \
     statistic.h \
 
 

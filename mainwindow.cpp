@@ -11,7 +11,10 @@
 #include <QtGlobal>
 #include <QTimer>
 #include <statistic.h>
-
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -21,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Настраиваем подключение к базе данных
+    setupDatabaseConnection();
 
     // Создаем QQuickWidget
     qmlWidget = new QQuickWidget(this);
@@ -62,6 +67,36 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(1000); // Запрос каждые 1000 мс (1 секунда)
 }
 
+void MainWindow::setupDatabaseConnection()
+{
+    db = QSqlDatabase::addDatabase("QPSQL"); // Убедитесь, что драйвер PostgreSQL подключен
+    db.setHostName("localhost");
+    db.setDatabaseName("Statisticbase"); // Замените на имя вашей БД
+    db.setUserName("postgres"); // Замените на ваше имя пользователя
+    db.setPassword("1234"); // Замените на ваш пароль
+    db.setPort(5432);
+
+    if (!db.open()) {
+        qDebug() << "Database connection failed:" << db.lastError().text();
+    } else {
+        qDebug() << "Connected to the database successfully!";
+    }
+}
+
+
+
+void MainWindow::insertFanSpeedToDatabase(int fanSpeed) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO FanSpeedData (speed, timestamp) VALUES (:speed, :timestamp)");
+    query.bindValue(":speed", fanSpeed);
+    query.bindValue(":timestamp", QDateTime::currentDateTime());
+
+    if (!query.exec()) {
+        qDebug() << "Ошибка при вставке данных в базу:" << query.lastError().text();
+    } else {
+        qDebug() << "Скорость вращения успешно занесена в базу данных.";
+    }
+}
 
 void MainWindow::requestDataFromModbus()
 {
@@ -195,7 +230,20 @@ void MainWindow::onModbusReadReady()
             qDebug() << "ProgressBar2 updated to:" << progressValue2;
         }
 
+        // Сохранение данных в базу данных
+        QSqlQuery query;
+        query.prepare("INSERT INTO motor_data (speed, progress1, progress2) VALUES (?, ?, ?)");
+        query.addBindValue(motorSpeed);
+        query.addBindValue(progressValue);
+        query.addBindValue(progressValue2);
 
+        if (!query.exec()) {
+            qDebug() << "Database error:" << query.lastError().text();  // Логируем ошибку, если она произошла
+        } else {
+            qDebug() << "Data saved to database: Speed =" << motorSpeed
+                     << ", Progress1 =" << progressValue
+                     << ", Progress2 =" << progressValue2;
+        }
 
     } else {
         qDebug() << "Modbus read error:" << reply->errorString();  // Логируем ошибку, если она произошла

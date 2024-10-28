@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>791</width>
-    <height>684</height>
+    <height>367</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
      <number>24</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
     <property name="format">
      <string>%v Amp</string>
@@ -61,7 +61,7 @@
      <number>24</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
     <property name="format">
      <string>%v Temp</string>
