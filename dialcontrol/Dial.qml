@@ -54,7 +54,7 @@ Item {
         font.pixelSize: 20
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: needle.bottom // Размещаем ниже иглы
-        anchors.topMargin: 13 // Отступ от иглы
+        anchors.topMargin: 20 // Отступ от иглы
     }
 
     // Динамическое обновление текста на дисплее

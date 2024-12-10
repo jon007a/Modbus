@@ -2,7 +2,7 @@
 #include <QVBoxLayout>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ConnectionSettings.h"
+#include "connectionsettings.h"
 #include <QUrl>
 #include <QModbusRtuSerialMaster>
 #include <QModbusTcpClient>
@@ -15,14 +15,38 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 #include <QDebug>
+#include <QtCharts/QLineSeries>
+#include <QLabel>
+#include <QPixmap>
+#include "statistictwo.h"
+#include <QDesktopServices>
+
+
+Statistic *statistic;
+
+
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , modbusDevice(nullptr) // инициализация клиента как nullptr
+    , userSelected(false)
 {
+    setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/icon1.png"));
+
+
     ui->setupUi(this);
+    setupStatusBar();
+
+    disableControls();
+
+
+    statistic = new Statistic(this);
+    //connect(this, &MainWindow::motorSpeedUpdated, statistic, &Statistic::receiveMotorSpeed);
+    //Statistic *statisticWindow = new Statistic();
+    //statisticWindow->setupConnections(this);
+
 
     // Настраиваем подключение к базе данных
     setupDatabaseConnection();
@@ -59,12 +83,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->qmlWidget->layout()->addWidget(qmlWidget); // Добавляем QQuickWidget в макет
     qDebug() << "Widget added to layout.";
 
-
-
     // Создаем таймер для периодического обновления данных с Modbus
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::requestDataFromModbus);
-    timer->start(1000); // Запрос каждые 1000 мс (1 секунда)
+    timer->start(500); // Запрос каждые 1000 мс (1 секунда)
+
+
 }
 
 void MainWindow::setupDatabaseConnection()
@@ -78,8 +102,10 @@ void MainWindow::setupDatabaseConnection()
 
     if (!db.open()) {
         qDebug() << "Database connection failed:" << db.lastError().text();
+        statusBar()->showMessage("Database connection failed", 2000);
     } else {
         qDebug() << "Connected to the database successfully!";
+        statusBar()->showMessage("Connected to the database successfully", 2000);
     }
 }
 
@@ -93,6 +119,7 @@ void MainWindow::insertFanSpeedToDatabase(int fanSpeed) {
 
     if (!query.exec()) {
         qDebug() << "Ошибка при вставке данных в базу:" << query.lastError().text();
+        statusBar()->showMessage("Ошибка при вставке данных в базу", 5000);
     } else {
         qDebug() << "Скорость вращения успешно занесена в базу данных.";
     }
@@ -104,8 +131,10 @@ void MainWindow::requestDataFromModbus()
         QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 3);  // Чтение регистра с адреса 0
         if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {  // Slave ID = 1
             connect(reply, &QModbusReply::finished, this, &MainWindow::onModbusReadReady);
+
         }
     }
+
 }
 
 
@@ -122,6 +151,7 @@ MainWindow::~MainWindow()
     if (modbusDevice)
         modbusDevice->disconnectDevice();
     delete ui;
+
 }
 
 // Слот для открытия окна настроек
@@ -142,6 +172,11 @@ void MainWindow::on_actionrtu_triggered()
 // Применение настроек подключения
 void MainWindow::applySettings(QString connectionType, int comPort, int baudRate, int dataBits, int stopBits, int parity, QString ipAddress, int port)
 {
+    if (!userSelected) {
+        QMessageBox::warning(this, "Warning", "Vyberite pol'zovatelya pered podklyucheniem");
+        return;
+    }
+
     if (modbusDevice) {
         modbusDevice->disconnectDevice();
         delete modbusDevice;
@@ -160,8 +195,13 @@ void MainWindow::applySettings(QString connectionType, int comPort, int baudRate
 
         if (rtuClient->connectDevice()) {
             qDebug() << "Connected to RTU device";
+            onSlaveConnected();
+
+            statusIndicator->setPixmap(QPixmap("C:/Qt/Raboti/vfd/icon/icon1.jpg")); // Зеленая иконка
+            statusBar()->showMessage("Connected to RTU device", 2000);
         } else {
             qDebug() << "Failed to connect to RTU device";
+            statusBar()->showMessage("Failed to connect to RTU device", 5000);
         }
 
         modbusDevice = rtuClient;
@@ -171,10 +211,16 @@ void MainWindow::applySettings(QString connectionType, int comPort, int baudRate
         tcpClient->setConnectionParameter(QModbusDevice::NetworkAddressParameter, ipAddress);
         tcpClient->setConnectionParameter(QModbusDevice::NetworkPortParameter, port);
 
+        // Устанавливаем таймаут ожидания в миллисекундах (например, 5000 мс = 5 секунд)
+        tcpClient->setTimeout(10000);
+
         if (!tcpClient->connectDevice()) {
             qDebug() << "Failed to connect to TCP device.";
+            statusBar()->showMessage("Failed to connect to TCP device", 5000);
         } else {
             qDebug() << "Successfully connected to TCP device.";
+            statusIndicator->setPixmap(QPixmap("C:/Qt/Raboti/vfd/icon/icon1.jpg")); // Зеленая иконка
+            statusBar()->showMessage("Successfully connected to TCP device", 2000);
         }
 
         modbusDevice = tcpClient;  // Сохраняем указатель на TCP-клиент
@@ -182,6 +228,7 @@ void MainWindow::applySettings(QString connectionType, int comPort, int baudRate
 
     // После подключения можно начать считывать данные
     if (modbusDevice) {
+
         QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 3);  // Чтение регистра с адреса 0
         if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {  // Slave ID = 1
             connect(reply, &QModbusReply::finished, this, &MainWindow::onModbusReadReady);
@@ -193,21 +240,19 @@ void MainWindow::applySettings(QString connectionType, int comPort, int baudRate
 void MainWindow::onModbusReadReady()
 {
     auto *reply = qobject_cast<QModbusReply *>(sender());
-    if (!reply)
-        return;
-
-    // Логируем статус ответа
-    qDebug() << "Received Modbus reply:";
+    if (!reply) return;
 
     if (reply->error() == QModbusDevice::NoError) {
+        packetCount++;
         const QModbusDataUnit unit = reply->result();
+
         int motorSpeed = unit.value(0);  // Получаем значение скорости мотора
 
-        // Получаем значение второго регистра (для progressBar)
+        // Получаем значение второго блока регистра (для progressBar)
         int progressValue = unit.value(1);  // Второй регистр
 
-        // Получаем значение второго регистра (для progressBar)
-        int progressValue2 = unit.value(2);  // Второй регистр
+        // Получаем значение третьего блока регистра (для progressBar)
+        int progressValue2 = unit.value(2);  // третий регистр
 
 
         QQuickItem *qmlObject = qmlWidget->rootObject();
@@ -219,38 +264,48 @@ void MainWindow::onModbusReadReady()
         }
 
 
-        //обработка второго регистра
+        // Обновляем прогресс бары
         if (ui->progressBar1) {
             ui->progressBar1->setValue(progressValue);
             qDebug() << "ProgressBar1 updated to:" << progressValue;
         }
-        //обработка третьего регистра
+
         if (ui->progressBar22) {
             ui->progressBar22->setValue(progressValue2);
             qDebug() << "ProgressBar2 updated to:" << progressValue2;
         }
 
-        // Сохранение данных в базу данных
-        QSqlQuery query;
-        query.prepare("INSERT INTO motor_data (speed, progress1, progress2) VALUES (?, ?, ?)");
-        query.addBindValue(motorSpeed);
-        query.addBindValue(progressValue);
-        query.addBindValue(progressValue2);
+        // Сохраняем данные только если пользователь выбран
+        if (userSelected && !currentUser.isEmpty()) {
+            insertDataToUserTable(currentUser, motorSpeed, progressValue, progressValue2);
+            qDebug() << "Saving data for user:" << currentUser;
+        }
 
-        if (!query.exec()) {
-            qDebug() << "Database error:" << query.lastError().text();  // Логируем ошибку, если она произошла
-        } else {
-            qDebug() << "Data saved to database: Speed =" << motorSpeed
-                     << ", Progress1 =" << progressValue
-                     << ", Progress2 =" << progressValue2;
+
+
+
+
+        emit motorSpeedUpdated(motorSpeed);
+        emit progressbars(progressValue);
+        emit progressbars2(progressValue2);
+
+        // Обновляем информацию о подключении
+        if (modbusDevice) {
+            QString type = (dynamic_cast<QModbusRtuSerialClient*>(modbusDevice)) ? "RTU" : "TCP";
+            QString address = type == "RTU" ?
+                                  modbusDevice->connectionParameter(QModbusDevice::SerialPortNameParameter).toString() :
+                                  modbusDevice->connectionParameter(QModbusDevice::NetworkAddressParameter).toString();
+            updateConnectionInfo(type, address, packetCount, errorCount);
         }
 
     } else {
+        errorCount++;
         qDebug() << "Modbus read error:" << reply->errorString();  // Логируем ошибку, если она произошла
     }
 
     reply->deleteLater();
 }
+
 
 // Слот для изменения значения слайдера
 void MainWindow::onSliderValueChanged(int newValue)
@@ -303,6 +358,209 @@ void MainWindow::on_action_triggered()
 {
     if (!statisticsWindow) {
         statisticsWindow = new Statistic(this);
+        connect(statisticsWindow, &Statistic::userSelected,
+                this, &MainWindow::setCurrentUser);
     }
     statisticsWindow->show();
+}
+
+
+
+void MainWindow::setupStatusBar()
+{
+    // Создаем постоянные виджеты для статусбара
+    QLabel *versionLabel = new QLabel("Версия 1.0.0", this);
+    statusIndicator = new QLabel(this);
+
+    // Создаем лейбл для информации о подключении
+    QLabel *connectionInfoLabel = new QLabel(this);
+    connectionInfoLabel->setFrameStyle(QFrame::NoFrame); // Убираем рамку
+    connectionInfoLabel->setMinimumWidth(300);
+    connectionInfoLabel->setText("TCP/RTU     Packets : 0    Erros : 0");
+
+
+
+    // Создаем пустой растягивающийся виджет для отступа слева
+    QWidget *spacer = new QWidget(this);
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    // Устанавливаем иконку статуса
+    QPixmap redIcon("C:/Qt/Raboti/vfd/icon/icon2.jpg");
+    statusIndicator->setPixmap(redIcon);
+
+    // Добавляем все элементы в статусбар в нужном порядке
+    statusBar()->addWidget(spacer);
+
+    // Добавляем отступы для элементов через стиль
+    connectionInfoLabel->setStyleSheet("QLabel { margin-right: 10px; }");
+    versionLabel->setStyleSheet("QLabel { margin-right: 10px; }");
+
+    statusBar()->addPermanentWidget(connectionInfoLabel);
+    statusBar()->addPermanentWidget(versionLabel);
+    statusBar()->addPermanentWidget(statusIndicator);
+
+    // Убираем границу самого статусбара
+    statusBar()->setStyleSheet("QStatusBar::item { border: none; }");
+
+    // Сохраняем указатель на лейбл для последующего обновления
+    connectionLabel = connectionInfoLabel;
+}
+
+void MainWindow::onSlaveConnected() {
+    emit slaveConnected(); // Уведомляем о подключении
+    qDebug() << "Устройство подключено.";
+    //statistic->Chart();
+}
+
+void MainWindow::onSlaveDisconnected() {
+    emit slaveDisconnected(); // Уведомляем об отключении
+    qDebug() << "Устройство отключено.";
+}
+
+
+void MainWindow::on_action_2_triggered()
+{
+
+    if (!statisticTwoWindow) {
+        statisticTwoWindow = new statistictwo(this); // Создаём объект типа StatisticTwo
+
+        // Соединяем сигнал обновления скорости с слотом в statistictwo
+        connect(this, &MainWindow::motorSpeedUpdated, statisticTwoWindow, &statistictwo::receiveMotorSpeed);
+        connect(this, &MainWindow::progressbars, statisticTwoWindow, &statistictwo::receiveProgressbars);
+        connect(this, &MainWindow::progressbars2, statisticTwoWindow, &statistictwo::receiveProgressbars2);
+    }
+    statisticTwoWindow->show();
+    statisticTwoWindow->raise();    // Поднимаем окно на передний план
+    statisticTwoWindow->activateWindow(); // Делаем активным
+
+}
+
+void MainWindow::disableControls()
+{
+    // Отключаем меню подключения и другие элементы управления
+    ui->menuConnection_type->setEnabled(false);
+    ui->qmlWidget->setEnabled(false);
+    ui->progressBar1->setEnabled(false);
+    ui->progressBar22->setEnabled(false);
+
+    // Показываем сообщение пользователю
+    statusBar()->showMessage("Выберите пользователя перед подключением к устройству", 5000);
+}
+
+void MainWindow::enableControls()
+{
+    // Включаем все элементы управления
+    ui->menuConnection_type->setEnabled(true);
+    ui->qmlWidget->setEnabled(true);
+    ui->progressBar1->setEnabled(true);
+    ui->progressBar22->setEnabled(true);
+
+    statusBar()->showMessage("Пользователь выбран: " + currentUser, 5000);
+}
+
+void MainWindow::setCurrentUser(const QString &username)
+{
+    currentUser = username;
+    userSelected = true;
+
+    // Создаем таблицу для пользователя
+    if (createUserTable(username)) {
+        enableControls();
+    } else {
+        QMessageBox::critical(this, "Error", "Ne udalos' sozdat' tablicu dlya pol'zovatelya");
+        userSelected = false;
+    }
+}
+
+bool MainWindow::createUserTable(const QString &username)
+{
+    if (username.isEmpty()) {
+        qDebug() << "Cannot create table for empty username";
+        return false;
+    }
+
+    QSqlQuery query;
+    QString tableName = "motor_data_" + username.toLower();
+
+    // Используем двойные кавычки для имени таблицы
+    QString createTableQuery = QString(
+                                   "CREATE TABLE IF NOT EXISTS \"%1\" ("
+                                   "id SERIAL PRIMARY KEY,"
+                                   "speed INTEGER,"
+                                   "progress1 INTEGER,"
+                                   "progress2 INTEGER,"
+                                   "timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+                                   ")").arg(tableName);
+
+    if (!query.exec(createTableQuery)) {
+        qDebug() << "Error creating table for user" << username
+                 << ":" << query.lastError().text()
+                 << "\nQuery was:" << createTableQuery;
+        return false;
+    }
+
+    qDebug() << "Successfully created table for user" << username;
+    return true;
+}
+
+void MainWindow::insertDataToUserTable(const QString &username, int motorSpeed, int progress1, int progress2)
+{
+    if (!userSelected || username.isEmpty()) {
+        qDebug() << "Skipping data insert - no user selected or empty username";
+        return;
+    }
+
+    QString tableName = "motor_data_" + username.toLower();
+    QSqlQuery query;
+
+    // Используем подготовленный запрос с правильным экранированием имени таблицы
+    QString queryStr = QString("INSERT INTO \"%1\" (speed, progress1, progress2) VALUES ($1, $2, $3)").arg(tableName);
+    query.prepare(queryStr);
+
+    query.bindValue(0, motorSpeed);
+    query.bindValue(1, progress1);
+    query.bindValue(2, progress2);
+
+    if (!query.exec()) {
+        qDebug() << "Database error when inserting data for user" << username
+                 << ":" << query.lastError().text()
+                 << "\nQuery was:" << query.lastQuery();
+    } else {
+        qDebug() << "Successfully inserted data for user" << username
+                 << ": speed=" << motorSpeed
+                 << ", progress1=" << progress1
+                 << ", progress2=" << progress2;
+    }
+}
+
+void MainWindow::on_actionOpenManual_triggered()
+{
+    QString manualPath = "C:/Qt/Raboti/vfd/ModbusManual/index.html";
+    QFileInfo fileInfo(manualPath);
+
+    qDebug() << "Trying to open manual at:" << manualPath;  // Добавляем для отладки
+
+    if (fileInfo.exists()) {
+        QUrl url = QUrl::fromLocalFile(fileInfo.absoluteFilePath());
+        if (!QDesktopServices::openUrl(url)) {
+            QMessageBox::warning(this, "Error",
+                                 "Ne udalos' otkryt' manual. Prover'te ustanovlen li brauzer po umolchaniyu.");
+        }
+    } else {
+        qDebug() << "Manual path not found:" << manualPath;
+        QMessageBox::warning(this, "Error",
+                             "Manual ne nayden. Put': " + manualPath);
+    }
+}
+
+void MainWindow::updateConnectionInfo(const QString &type, const QString &address, int packets, int errors)
+{
+    if (connectionLabel) {
+        QString info = QString("%1 : %2    Packets : %3    Erros : %4")
+        .arg(type)
+            .arg(address)
+            .arg(packets)
+            .arg(errors);
+        connectionLabel->setText(info);
+    }
 }

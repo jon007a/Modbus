@@ -1,0 +1,12 @@
+release/connectionsettings.o
+release/main.o
+release/mainwindow.o
+release/qcustomplot.o
+release/statistic.o
+release/statistictwo.o
+release/qrc_dialcontrol.o
+release/moc_connectionsettings.o
+release/moc_mainwindow.o
+release/moc_qcustomplot.o
+release/moc_statistic.o
+release/moc_statistictwo.o

@@ -6,6 +6,7 @@ ConnectionSettings::ConnectionSettings(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ConnectionSettings)
 {
+    setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/icon3.png"));
     ui->setupUi(this);
 
     // Добавляем два варианта выбора: RTU и TCP

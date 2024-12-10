@@ -1,0 +1,12 @@
+debug/connectionsettings.o
+debug/main.o
+debug/mainwindow.o
+debug/qcustomplot.o
+debug/statistic.o
+debug/statistictwo.o
+debug/qrc_dialcontrol.o
+debug/moc_connectionsettings.o
+debug/moc_mainwindow.o
+debug/moc_qcustomplot.o
+debug/moc_statistic.o
+debug/moc_statistictwo.o

@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>231</width>
-    <height>300</height>
+    <width>270</width>
+    <height>438</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Параметры</string>
   </property>
   <widget class="QComboBox" name="connectionTypeComboBox">
    <property name="geometry">
@@ -19,8 +19,43 @@
      <x>30</x>
      <y>60</y>
      <width>72</width>
-     <height>24</height>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QComboBox:hover {
+    border: 2px solid #808080; /* Светлее при наведении */
+}
+
+QComboBox:editable {
+    background-color: #757575; /* Темно-серый фон при редактировании */
+}
+
+QComboBox::drop-down {
+    background-color: #757575; /* Фон выпадающего списка */
+    border: none; /* Убираем обводку */
+}
+
+QComboBox::down-arrow {
+    image: url(:/path/to/your/icon.png); /* Замените на путь к вашей иконке стрелки */
+    width: 10px; /* Ширина иконки */
+    height: 10px; /* Высота иконки */
+}
+
+QComboBox::indicator {
+    width: 0; /* Убираем стандартный индикатор */
+    height: 0;
+}
+</string>
    </property>
    <property name="placeholderText">
     <string>тип</string>
@@ -30,10 +65,46 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>90</y>
-     <width>71</width>
-     <height>25</height>
+     <y>104</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+    background-color: #757575; /* Основной светло-серый фон */
+    color: #212121; /* Цвет текста */
+    border: 2px solid #90A4AE; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы для всего spin box */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+    background-color: #A9A9A9; /* Темная кнопка для увеличения/уменьшения */
+    border: none; /* Убираем обводку */
+    width: 16px; /* Ширина кнопок */
+    height: 10px; /* Высота кнопок для более аккуратного вида */
+    border-radius: 5px; /* Закругленные углы для кнопок */
+    margin: 2px; /* Добавляем небольшой отступ между кнопками и spin box */
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #B0BEC5; /* Более светлый цвет при наведении */
+}
+
+QSpinBox::up-button:pressed, QSpinBox::down-button:pressed {
+    background-color: #90A4AE; /* Темный цвет при нажатии */
+}
+
+QSpinBox::up-button:default {
+    border: none; /* Убираем обводку при нажатии по умолчанию */
+}
+
+QSpinBox::down-button:default {
+    border: none; /* Убираем обводку при нажатии по умолчанию */
+}
+</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="ipAddressLineEdit">
@@ -41,32 +112,111 @@
     <rect>
      <x>110</x>
      <y>60</y>
-     <width>113</width>
-     <height>24</height>
+     <width>151</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QLineEdit:focus {
+    border: 2px solid #4CAF50; /* Зеленая обводка при фокусе */
+    
+}
+
+QLineEdit::placeholder {
+    color: #A9A9A9; /* Цвет текста для плейсхолдера */
+}
+</string>
+   </property>
+   <property name="placeholderText">
+    <string>айпи и порт</string>
    </property>
   </widget>
   <widget class="QPushButton" name="applyButton">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>260</y>
-     <width>111</width>
-     <height>24</height>
+     <x>100</x>
+     <y>390</y>
+     <width>161</width>
+     <height>41</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 10px 20px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+    border: 2px solid #616161; /* Более темная серая обводка */
+}
+
+QPushButton:hover {
+    background-color: #808080; /* Светлее при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #5a5a5a; /* Темнее при нажатии */
+    padding-left: 12px; /* Сдвиг при нажатии для эффекта глубины */
+    padding-top: 12px;
+}
+</string>
+   </property>
    <property name="text">
-    <string>Применить</string>
+    <string>Подключиться</string>
    </property>
   </widget>
   <widget class="QComboBox" name="dataBitsComboBox">
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>150</y>
-     <width>72</width>
-     <height>24</height>
+     <y>190</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QComboBox:hover {
+    border: 2px solid #808080; /* Светлее при наведении */
+}
+
+QComboBox:editable {
+    background-color: #757575; /* Темно-серый фон при редактировании */
+}
+
+QComboBox::drop-down {
+    background-color: #757575; /* Фон выпадающего списка */
+    border: none; /* Убираем обводку */
+}
+
+QComboBox::down-arrow {
+    image: url(:/path/to/your/icon.png); /* Замените на путь к вашей иконке стрелки */
+    width: 10px; /* Ширина иконки */
+    height: 10px; /* Высота иконки */
+}
+
+QComboBox::indicator {
+    width: 0; /* Убираем стандартный индикатор */
+    height: 0;
+}
+</string>
    </property>
    <property name="placeholderText">
     <string>datdbits</string>
@@ -76,10 +226,45 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>180</y>
-     <width>72</width>
-     <height>24</height>
+     <y>230</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QComboBox:hover {
+    border: 2px solid #808080; /* Светлее при наведении */
+}
+
+QComboBox:editable {
+    background-color: #757575; /* Темно-серый фон при редактировании */
+}
+
+QComboBox::drop-down {
+    background-color: #757575; /* Фон выпадающего списка */
+    border: none; /* Убираем обводку */
+}
+
+QComboBox::down-arrow {
+    image: url(:/path/to/your/icon.png); /* Замените на путь к вашей иконке стрелки */
+    width: 10px; /* Ширина иконки */
+    height: 10px; /* Высота иконки */
+}
+
+QComboBox::indicator {
+    width: 0; /* Убираем стандартный индикатор */
+    height: 0;
+}
+</string>
    </property>
    <property name="placeholderText">
     <string>stopBits</string>
@@ -89,10 +274,45 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>120</y>
-     <width>72</width>
-     <height>24</height>
+     <y>150</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QComboBox:hover {
+    border: 2px solid #808080; /* Светлее при наведении */
+}
+
+QComboBox:editable {
+    background-color: #757575; /* Темно-серый фон при редактировании */
+}
+
+QComboBox::drop-down {
+    background-color: #757575; /* Фон выпадающего списка */
+    border: none; /* Убираем обводку */
+}
+
+QComboBox::down-arrow {
+    image: url(:/path/to/your/icon.png); /* Замените на путь к вашей иконке стрелки */
+    width: 10px; /* Ширина иконки */
+    height: 10px; /* Высота иконки */
+}
+
+QComboBox::indicator {
+    width: 0; /* Убираем стандартный индикатор */
+    height: 0;
+}
+</string>
    </property>
    <property name="currentText">
     <string extracomment="dawd"/>
@@ -105,10 +325,45 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>210</y>
-     <width>72</width>
-     <height>24</height>
+     <y>270</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox {
+    background-color: #757575; /* Основной темно-серый фон */
+    color: white; /* Цвет текста */
+    border: 2px solid #616161; /* Более темная серая обводка */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px; /* Внутренний отступ */
+    font-size: 16px; /* Размер шрифта */
+}
+
+QComboBox:hover {
+    border: 2px solid #808080; /* Светлее при наведении */
+}
+
+QComboBox:editable {
+    background-color: #757575; /* Темно-серый фон при редактировании */
+}
+
+QComboBox::drop-down {
+    background-color: #757575; /* Фон выпадающего списка */
+    border: none; /* Убираем обводку */
+}
+
+QComboBox::down-arrow {
+    image: url(:/path/to/your/icon.png); /* Замените на путь к вашей иконке стрелки */
+    width: 10px; /* Ширина иконки */
+    height: 10px; /* Высота иконки */
+}
+
+QComboBox::indicator {
+    width: 0; /* Убираем стандартный индикатор */
+    height: 0;
+}
+</string>
    </property>
    <property name="placeholderText">
     <string>parity</string>

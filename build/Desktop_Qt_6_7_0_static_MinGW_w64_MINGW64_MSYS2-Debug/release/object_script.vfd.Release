@@ -1,0 +1,10 @@
+release/connectionsettings.o
+release/main.o
+release/mainwindow.o
+release/statistic.o
+release/vfd_plugin_import.o
+release/vfd_qml_plugin_import.o
+release/qrc_dialcontrol.o
+release/moc_connectionsettings.o
+release/moc_mainwindow.o
+release/moc_statistic.o
