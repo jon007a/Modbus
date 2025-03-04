@@ -1,9 +1,13 @@
-QT += core gui widgets
+QT += core gui widgets printsupport
 QT += serialport
 QT += quick qml quickcontrols2
 QT += serialbus
 QT += quick quickwidgets
 QT += sql
+QT += charts
+QT += network
+QT += axcontainer
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -16,19 +20,27 @@ SOURCES += \
     connectionsettings.cpp \
     main.cpp \
     mainwindow.cpp \
+    qcustomplot.cpp \
+    registration.cpp \
     statistic.cpp \
+    statistictwo.cpp
 
 
 HEADERS += \
     connectionsettings.h \
     mainwindow.h \
+    qcustomplot.h \
+    registration.h \
     statistic.h \
+    statistictwo.h
 
 
 FORMS += \
     connectionsettings.ui \
     mainwindow.ui \
-    statistic.ui
+    registration.ui \
+    statistic.ui \
+    statistictwo.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -40,4 +52,5 @@ DISTFILES += \
     main.qml
 
 RESOURCES += \
-    dialcontrol.qrc
+    dialcontrol.qrc \
+    1.html

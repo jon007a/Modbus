@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>statistictwo</class>
+ <widget class="QMainWindow" name="statistictwo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Графики</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <widget class="QCustomPlot" name="customPlot" native="true"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QCustomPlot" name="customPlot4" native="true"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCustomPlot" name="customPlot3" native="true"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QCustomPlot" name="customPlot2" native="true"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="autoFollowButton">
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #2D2D2D;
+    color: #00FF00;  /* Зеленый цвет для состояния &quot;Вкл&quot; */
+    border: 1px solid #3E3E3E;
+    padding: 5px;
+    min-width: 150px;
+    min-height: 30px;
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: #3E3E3E;
+}
+
+QPushButton:pressed {
+    background-color: #1E1E1E;
+}
+
+QPushButton:checked {
+    color: #FF0000;  /* Красный цвет для состояния &quot;Выкл&quot; */
+    background-color: #2D2D2D;
+}
+
+QPushButton:checked:hover {
+    background-color: #3E3E3E;
+}</string>
+      </property>
+      <property name="text">
+       <string>Автоследование ВКЛ/ВЫКЛ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: #2D2D2D;
+    color: #00FF00;  /* Зеленый цвет для состояния &quot;Вкл&quot; */
+    border: 1px solid #3E3E3E;
+    padding: 5px;
+    min-width: 150px;
+    min-height: 30px;
+    border-radius: 4px;
+}
+
+QPushButton:hover {
+    background-color: #3E3E3E;
+}
+
+QPushButton:pressed {
+    background-color: #1E1E1E;
+}
+
+QPushButton:checked {
+    color: #FF0000;  /* Красный цвет для состояния &quot;Выкл&quot; */
+    background-color: #2D2D2D;
+}
+
+QPushButton:checked:hover {
+    background-color: #3E3E3E;
+}</string>
+      </property>
+      <property name="text">
+       <string>Создать отчет</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header location="global">qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

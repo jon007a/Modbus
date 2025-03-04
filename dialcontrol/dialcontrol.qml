@@ -2,25 +2,29 @@ import QtQuick
 import QtQuick.Window
 
 Rectangle {
+    id: root
     color: "#1E1E1E"
     width: 300; height: 300
 
-    property real dialValue: 0 // Добавьте это свойство
-    signal sendSpeedChange(real speed)  // Объявляем сигнал
+    property real dialValue: 0
+    signal sendSpeedChange(real speed)
     signal sliderValueChanged(int value)
 
     Dial {
         id: dial
         anchors.centerIn: parent
-        value: dialValue // Используйте это свойство)
-
+        value: root.dialValue
     }
 
     Rectangle {
         id: container
         property int oldWidth: 0
-        anchors { bottom: parent.bottom; left: parent.left
-            right: parent.right; leftMargin: 20; rightMargin: 20
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            leftMargin: 20
+            rightMargin: 20
             bottomMargin: 10
         }
         height: 16
@@ -35,7 +39,7 @@ Rectangle {
 
         onWidthChanged: {
             if (oldWidth === 0) {
-                oldWidth = width;
+                oldWidth = width
                 return
             }
 
@@ -46,7 +50,6 @@ Rectangle {
 
         Rectangle {
             id: slider
-
             x: 1; y: 1; width: 30; height: 14
             radius: 6
             antialiasing: true
@@ -56,19 +59,31 @@ Rectangle {
             }
 
             MouseArea {
-                           anchors.fill: parent
-                           anchors.margins: -16
-                           drag.target: parent; drag.axis: Drag.XAxis
-                           drag.minimumX: 2; drag.maximumX: container.width - 32
+                anchors.fill: parent
+                anchors.margins: -16
+                drag.target: parent
+                drag.axis: Drag.XAxis
+                drag.minimumX: 2
+                drag.maximumX: container.width - 32
 
-                           onReleased: {
-                               // Пересчитываем значение и отправляем сигнал в mainwindow
-                               let value = (slider.x / (container.width - 32)) * 12000; // Значение от 0 до 12000
-                               dialValue = value; // Обновляем значение для отображения на приборе
-                               sendSpeedChange(value); // Отправляем сигнал изменения скорости
-                               sliderValueChanged(value); // Отправляем сигнал изменения значения слайдера
-                           }
-                       }
-                   }
-               }
+                onPositionChanged: {
+                    if (pressed) {
+                        updateValue()
+                    }
+                }
+
+                onReleased: {
+                    updateValue()
+                }
+
+                function updateValue() {
+                    let value = (slider.x / (container.width - 32)) * 3000
+                    console.log("Sending value from QML:", value)
+                    root.dialValue = value
+                    root.sendSpeedChange(value)
+                    root.sliderValueChanged(Math.round(value))
+                }
+            }
+        }
+    }
 }

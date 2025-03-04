@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
-    <height>367</height>
+    <width>800</width>
+    <height>420</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>420</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>420</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -35,8 +53,28 @@
       <x>320</x>
       <y>40</y>
       <width>451</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+    background-color: #f0f0f0;               /* Светлый фон */
+    border: 1px solid #696969;               /* Светло-серая граница */
+    border-radius: 10px;                     /* Закругленные края */
+    text-align: center;                      /* Центрирование текста */
+    font-size: 12px;                         /* Размер шрифта */
+    color: #555555;                          /* Темный цвет текста */
+    min-height: 25px;                        /* Высота прогресс-бара */
+}
+
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        spread:pad, x1:0, y1:0, x2:1, y2:1,
+        stop:0 #d0d0d0, stop:1 #696969);     /* Матовый серый градиент */
+    border-radius: 8px;                      /* Закругленные края сегмента */
+    margin: 2px;                             /* Отступы от краев */
+}
+</string>
     </property>
     <property name="value">
      <number>24</number>
@@ -52,10 +90,39 @@
     <property name="geometry">
      <rect>
       <x>320</x>
-      <y>160</y>
+      <y>90</y>
       <width>451</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+    background-color: #f0f0f0;               /* Светлый фон */
+    border: 1px solid #696969;               /* Светло-серая граница */
+    border-radius: 10px;                     /* Закругленные края */
+    text-align: center;                      /* Центрирование текста */
+    font-size: 12px;                         /* Размер шрифта */
+    color: #555555;                          /* Темный цвет текста */
+    min-height: 25px;                        /* Высота прогресс-бара */
+}
+
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        spread:pad, x1:0, y1:0, x2:1, y2:1,
+        stop:0 #d0d0d0, stop:1 #696969);     /* Матовый серый градиент */
+    border-radius: 8px;                      /* Закругленные края сегмента */
+    margin: 2px;                             /* Отступы от краев */
+}
+</string>
+    </property>
+    <property name="maximum">
+     <number>800</number>
     </property>
     <property name="value">
      <number>24</number>
@@ -64,38 +131,143 @@
      <enum>Qt::Orientation::Horizontal</enum>
     </property>
     <property name="format">
-     <string>%v Temp</string>
+     <string>%v Volt</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>791</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuStatistic">
-    <property name="title">
-     <string>Statistic</string>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>130</y>
+      <width>296</width>
+      <height>171</height>
+     </rect>
     </property>
-    <addaction name="separator"/>
-    <addaction name="action"/>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="startButton">
+         <property name="toolTip">
+          <string>Запуск устройства</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> QPushButton {
+       background-color: #2D2D2D; /* Цвет фона */
+       color: #FFFFFF; /* Цвет текста по умолчанию */
+       border: 1px solid #3E3E3E;
+       padding: 5px;
+   }
+   QPushButton:hover {
+       background-color: #3E3E3E; /* Цвет фона при наведении */
+   }</string>
+         </property>
+         <property name="text">
+          <string>Пуск</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="stopButton">
+         <property name="toolTip">
+          <string>Остановить устройство</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+       background-color: #2D2D2D; /* Цвет фона */
+       color: #FFFFFF; /* Цвет текста по умолчанию */
+       border: 1px solid #3E3E3E;
+       padding: 5px;
+   }
+   QPushButton:hover {
+       background-color: #3E3E3E; /* Цвет фона при наведении */
+   }</string>
+         </property>
+         <property name="text">
+          <string>Стоп</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="resetButton">
+         <property name="toolTip">
+          <string>Сброс ошибок</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+       background-color: #2D2D2D; /* Цвет фона */
+       color: #FFFFFF; /* Цвет текста по умолчанию */
+       border: 1px solid #3E3E3E;
+       padding: 5px;
+   }
+   QPushButton:hover {
+       background-color: #3E3E3E; /* Цвет фона при наведении */
+   }</string>
+         </property>
+         <property name="text">
+          <string>Сброс</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="statusLabel">
+         <property name="styleSheet">
+          <string notr="true">QLabel {
+    background-color: #2D2D2D;
+    color: #FFFFFF;
+    border: 1px solid #3E3E3E;
+    padding: 5px;
+    min-width: 100px;
+    font-weight: bold;
+    border-radius: 3px;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
-   <widget class="QMenu" name="menuConnection_type">
-    <property name="cursor">
-     <cursorShape>ArrowCursor</cursorShape>
+   <widget class="QPushButton" name="disconnectButton">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>290</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
     </property>
-    <property name="title">
-     <string>Connection type</string>
+    <property name="styleSheet">
+     <string notr="true">
+    QPushButton {
+        background-color: #2D2D2D;
+        color: #FF0000;
+        border: 1px solid #3E3E3E;
+        padding: 5px;
+        min-width: 80px;
+    }
+    QPushButton:hover {
+        background-color: #3E3E3E;
+    }
+</string>
     </property>
-    <addaction name="separator"/>
-    <addaction name="actionrtu"/>
+    <property name="text">
+     <string>ВЫХОД</string>
+    </property>
    </widget>
-   <addaction name="menuStatistic"/>
-   <addaction name="menuConnection_type"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="enabled">
@@ -105,17 +277,131 @@
     <cursorShape>ArrowCursor</cursorShape>
    </property>
   </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+    background-color: #1E1E1E;
+    color: #D4D4D4;
+    border-bottom: 1px solid #2D2D2D;
+}
+QMenuBar::item {
+    padding: 8px 12px;
+    background: transparent;
+}
+QMenuBar::item:selected {
+    background-color: #2D2D2D;
+    border-radius: 4px;
+}
+QMenuBar::item:pressed {
+    background-color: #3D3D3D;
+}
+QMenu {
+    background-color: #1E1E1E;
+    color: #D4D4D4;
+    border: 1px solid #2D2D2D;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 2px;
+}
+QMenu::item {
+    padding: 8px 25px 8px 20px;
+    border-radius: 4px;
+}
+QMenu::item:selected {
+    background-color: #2D2D2D;
+}
+QMenu::item:pressed {
+    background-color: #3D3D3D;
+}
+QMenu::separator {
+    height: 1px;
+    background: #2D2D2D;
+    margin: 5px 10px;
+}
+QMenu::indicator {
+    width: 18px;
+    height: 18px;
+}</string>
+   </property>
+   <widget class="QMenu" name="menuStatistic">
+    <property name="title">
+     <string>Авторизация</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="action"/>
+    <addaction name="actionRegister"/>
+   </widget>
+   <widget class="QMenu" name="menuConnection_type">
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>Настройки подключения</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionrtu"/>
+   </widget>
+   <widget class="QMenu" name="menustatistictwo">
+    <property name="title">
+     <string>Графики</string>
+    </property>
+    <addaction name="action_2"/>
+   </widget>
+   <widget class="QMenu" name="menuModbusManual">
+    <property name="title">
+     <string>Мануал по протоколу</string>
+    </property>
+    <addaction name="actionOpenManual"/>
+   </widget>
+   <addaction name="menuStatistic"/>
+   <addaction name="menuConnection_type"/>
+   <addaction name="menustatistictwo"/>
+   <addaction name="menuModbusManual"/>
+  </widget>
   <action name="actionrtu">
    <property name="text">
     <string>вариант подключения</string>
    </property>
    <property name="toolTip">
-    <string>настройки подключения</string>
+    <string>вариант подключения</string>
    </property>
   </action>
   <action name="action">
    <property name="text">
-    <string>Открыть окно статистики</string>
+    <string>Выбрать пользователя</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>статистика</string>
+   </property>
+  </action>
+  <action name="actionOpenManual">
+   <property name="text">
+    <string>Open Manual</string>
+   </property>
+  </action>
+  <action name="actionRegister1">
+   <property name="text">
+    <string>Открыть окно регистрации</string>
+   </property>
+  </action>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Создать пользователя</string>
+   </property>
+  </action>
+  <action name="actionExportReport">
+   <property name="text">
+    <string>Составить отчет</string>
    </property>
   </action>
  </widget>
