@@ -46,7 +46,7 @@ public:
         Registration->setMaximumSize(QSize(50000, 500000));
         gridLayoutWidget = new QWidget(Registration);
         gridLayoutWidget->setObjectName("gridLayoutWidget");
-        gridLayoutWidget->setGeometry(QRect(10, 10, 501, 310));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 626, 349));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -58,9 +58,21 @@ public:
         confirmPasswordLineEdit = new QLineEdit(gridLayoutWidget);
         confirmPasswordLineEdit->setObjectName("confirmPasswordLineEdit");
         confirmPasswordLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #F5F5F5;\n"
+"    color: #333333;\n"
+"    border: 1px solid #BBBBBB;\n"
+"    border-radius: 5px;\n"
 "    padding: 5px;\n"
-"    border: 1px solid #3E3E3E;\n"
-"    border-radius: 4px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid #707070;\n"
+"}\n"
+"\n"
+"QLineEdit:disabled {\n"
+"    background-color: #E0E0E0;\n"
+"    color: #9E9E9E;\n"
 "}"));
         confirmPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
 
@@ -79,9 +91,21 @@ public:
         activationCodeLineEdit = new QLineEdit(gridLayoutWidget);
         activationCodeLineEdit->setObjectName("activationCodeLineEdit");
         activationCodeLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #F5F5F5;\n"
+"    color: #333333;\n"
+"    border: 1px solid #BBBBBB;\n"
+"    border-radius: 5px;\n"
 "    padding: 5px;\n"
-"    border: 1px solid #3E3E3E;\n"
-"    border-radius: 4px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid #707070;\n"
+"}\n"
+"\n"
+"QLineEdit:disabled {\n"
+"    background-color: #E0E0E0;\n"
+"    color: #9E9E9E;\n"
 "}"));
         activationCodeLineEdit->setMaxLength(12);
 
@@ -95,9 +119,21 @@ public:
         passwordLineEdit = new QLineEdit(gridLayoutWidget);
         passwordLineEdit->setObjectName("passwordLineEdit");
         passwordLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #F5F5F5;\n"
+"    color: #333333;\n"
+"    border: 1px solid #BBBBBB;\n"
+"    border-radius: 5px;\n"
 "    padding: 5px;\n"
-"    border: 1px solid #3E3E3E;\n"
-"    border-radius: 4px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid #707070;\n"
+"}\n"
+"\n"
+"QLineEdit:disabled {\n"
+"    background-color: #E0E0E0;\n"
+"    color: #9E9E9E;\n"
 "}"));
         passwordLineEdit->setMaxLength(40);
         passwordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
@@ -112,9 +148,21 @@ public:
         usernameLineEdit = new QLineEdit(gridLayoutWidget);
         usernameLineEdit->setObjectName("usernameLineEdit");
         usernameLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #F5F5F5;\n"
+"    color: #333333;\n"
+"    border: 1px solid #BBBBBB;\n"
+"    border-radius: 5px;\n"
 "    padding: 5px;\n"
-"    border: 1px solid #3E3E3E;\n"
-"    border-radius: 4px;\n"
+"    min-height: 20px;\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid #707070;\n"
+"}\n"
+"\n"
+"QLineEdit:disabled {\n"
+"    background-color: #E0E0E0;\n"
+"    color: #9E9E9E;\n"
 "}"));
         usernameLineEdit->setMaxLength(20);
 

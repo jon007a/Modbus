@@ -3,6 +3,12 @@
 #include <QDateTime>
 #include <QDebug>
 #include "qcustomplot.h"
+#include <QAxObject>
+#include <QDir>
+#include <QTemporaryFile>
+#include <QBuffer>
+#include <QFileDialog>
+#include <QMessageBox>
 
 statistictwo::statistictwo(QWidget *parent) :
     QMainWindow(parent),
@@ -54,9 +60,21 @@ statistictwo::statistictwo(QWidget *parent) :
     customPlot3->xAxis->setLabel("Время");
     customPlot3->yAxis->setLabel("Вольтаж");
 
+    // Настройка customPlot4 для отображения прогресса
+    customPlot4->addGraph();
+    customPlot4->setInteraction(QCP::iRangeDrag, true);
+    customPlot4->setInteraction(QCP::iRangeZoom, true);
+    customPlot4->axisRect()->setRangeDrag(Qt::Horizontal);
+    customPlot4->axisRect()->setRangeZoom(Qt::Horizontal);
+    customPlot4->graph(0)->setLineStyle(QCPGraph::lsNone);
+    customPlot4->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssSquare, 8));
+    customPlot4->xAxis->setLabel("Время");
+    customPlot4->yAxis->setLabel("Температура");
+
     // Установим светлый фон для графиков
     customPlot2->setBackground(QBrush(QColor(245, 245, 245)));
     customPlot3->setBackground(QBrush(QColor(245, 245, 245)));
+    customPlot4->setBackground(QBrush(QColor(245, 245, 245)));
 
     // Добавление столбцов с использованием QCPBars
     bars1 = new QCPBars(customPlot2->xAxis, customPlot2->yAxis);
@@ -69,9 +87,16 @@ statistictwo::statistictwo(QWidget *parent) :
     bars2->setPen(QPen(QColor(255, 100, 100, 255)));
     bars2->setBrush(QColor(255, 100, 100, 80));
 
+    bars4 = new QCPBars(customPlot4->xAxis, customPlot4->yAxis);
+    bars4->setAntialiased(false);
+    bars4->setPen(QPen(QColor(255, 100, 100, 255)));
+    bars4->setBrush(QColor(255, 100, 100, 80));
+
+
     // Начальная настройка осей
     customPlot2->yAxis->setRange(0, 100);
     customPlot3->yAxis->setRange(0, 100);
+    customPlot4->yAxis->setRange(0, 100);
 
     // Настройка основного графика скорости
     ui->customPlot->addGraph();
@@ -116,6 +141,10 @@ statistictwo::statistictwo(QWidget *parent) :
     timestamps.clear();
     motorSpeeds.clear();
 }
+
+
+
+
 
 statistictwo::~statistictwo()
 {
@@ -233,6 +262,35 @@ void statistictwo::receiveProgressbars2(int progressValue2)
     customPlot3->xAxis->setRange(currentTime - 30, currentTime + 1);
     customPlot3->replot();
 }
+
+void statistictwo::receiveProgressbars4(int progressValue4)
+{
+    qint64 currentTime = QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000.0;
+    qDebug() << "Получено значение прогресса 2:" << progressValue4 << "время:" << currentTime;
+
+    if (progressValue4 < 0 || progressValue4 > 100) {
+        qDebug() << "Некорректное значение прогресса 2:" << progressValue4;
+        return;
+    }
+
+    xData4.append(currentTime);
+    yData4.append(progressValue4);
+
+    if (xData4.size() > 60) {
+        xData4.removeFirst();
+        yData4.removeFirst();
+    }
+
+    bars4->setData(xData4, yData4);
+
+    QSharedPointer<QCPAxisTickerDateTime> dateTicker(new QCPAxisTickerDateTime);
+    dateTicker->setDateTimeFormat("hh:mm:ss");
+    customPlot4->xAxis->setTicker(dateTicker);
+
+    customPlot4->xAxis->setRange(currentTime - 30, currentTime + 1);
+    customPlot4->replot();
+}
+
 void statistictwo::onXAxisRangeChanged(const QCPRange &range)
 {
     // Сохраняем текущий диапазон
@@ -247,7 +305,7 @@ void statistictwo::toggleAutoFollow()
 
 
 //Отчеты
-QString widget_to_base64(QWidget *w) {
+/*QString widget_to_base64(QWidget *w) {
     QPixmap pixmap = w->grab();
     QByteArray bytes;
     QBuffer buffer(&bytes);
@@ -289,5 +347,170 @@ void statistictwo::on_pushButton_2_clicked()
       QTextDocumentWriter od("c://gf//81.pdf");
         od.setFormat("PDF");
     od.write(&doc);
+}
+*/
 
+// Добавьте новый метод для расчета средней температуры
+double statistictwo::calculateAverageTemperature()
+{
+    if (yData4.isEmpty()) {
+        return 0.0;
+    }
+
+    double sum = 0.0;
+    for (const double& value : yData4) {
+        sum += value;
+    }
+
+    return sum / yData4.size();
+}
+
+// Добавьте новый метод для создания отчета Word
+void statistictwo::createWordReport(const QString& templatePath, const QString& outputPath)
+{
+    // Создаем экземпляр Word
+    QAxObject* word = new QAxObject("Word.Application", this);
+
+    if (word->isNull()) {
+        QMessageBox::critical(this, "Ошибка", "Не удалось запустить Microsoft Word. Убедитесь, что Word установлен.");
+        return;
+    }
+
+    word->setProperty("Visible", false);
+
+    // Получаем коллекцию документов
+    QAxObject* documents = word->querySubObject("Documents");
+
+    // Открываем шаблон
+    QAxObject* document = documents->querySubObject("Open(const QString&)", QDir::toNativeSeparators(templatePath));
+
+    if (!document) {
+        QMessageBox::critical(this, "Ошибка", "Не удалось открыть шаблон документа.");
+        word->dynamicCall("Quit()");
+        delete word;
+        return;
+    }
+
+    // Ищем закладки в документе
+    QAxObject* bookmarks = document->querySubObject("Bookmarks");
+
+    // Делаем скриншот всего окна статистики
+    QPixmap screenshot = this->grab();
+
+    // Сохраняем скриншот во временный файл
+    QTemporaryFile tempFile;
+    tempFile.setAutoRemove(false); // Не удалять файл автоматически
+    if (tempFile.open()) {
+        screenshot.save(&tempFile, "PNG");
+        QString screenshotPath = QDir::toNativeSeparators(tempFile.fileName());
+        tempFile.close();
+
+        // Проверяем, существует ли закладка для вставки изображения
+        if (bookmarks->dynamicCall("Exists(const QString&)", "GraphImage").toBool()) {
+            // Получаем диапазон текста по закладке
+            QAxObject* bookmark = bookmarks->querySubObject("Item(const QString&)", "GraphImage");
+            QAxObject* range = bookmark->querySubObject("Range");
+            range->dynamicCall("Text", QString(""));
+
+            // Вставляем изображение в место закладки
+            QAxObject* inlineShapes = range->querySubObject("InlineShapes");
+            inlineShapes->dynamicCall("AddPicture(const QString&)", screenshotPath);
+
+            delete inlineShapes;
+            delete range;
+            delete bookmark;
+        }
+
+        // Удаляем временный файл
+        QFile::remove(screenshotPath);
+    }
+
+    // Вставляем данные по средней температуре
+    if (bookmarks->dynamicCall("Exists(const QString&)", "AvgTemperature").toBool()) {
+        QAxObject* bookmark = bookmarks->querySubObject("Item(const QString&)", "AvgTemperature");
+        QAxObject* range = bookmark->querySubObject("Range");
+
+        // Форматируем значение средней температуры
+        QString avgTemp = QString::number(calculateAverageTemperature(), 'f', 2);
+        range->dynamicCall("Text", avgTemp);
+
+        delete range;
+        delete bookmark;
+    }
+
+    // Получаем текущую дату и время для отчета
+    QDateTime now = QDateTime::currentDateTime();
+    QString dateTimeStr = now.toString("dd.MM.yyyy HH:mm:ss");
+
+    // Сохраняем как новый документ
+    document->dynamicCall("SaveAs(const QString&)", QDir::toNativeSeparators(outputPath));
+
+    // Закрываем документ и Word
+    document->dynamicCall("Close()");
+    word->dynamicCall("Quit()");
+
+    // Очищаем память
+    delete bookmarks;
+    delete document;
+    delete documents;
+    delete word;
+
+    QMessageBox::information(this, "Готово", "Отчет успешно создан и сохранен в:\n" + outputPath);
+}
+
+// Обновляем обработчик кнопки "Создать отчет"
+void statistictwo::on_pushButton_2_clicked()
+{
+    // Путь к шаблону по умолчанию
+    QString defaultTemplatePath = "C:/Qt/Raboti/vfd/templates/otchet.docx";
+    QString templatePath;
+
+    // Проверяем, существует ли шаблон по умолчанию
+    if (QFile::exists(defaultTemplatePath)) {
+        // Спрашиваем пользователя, хочет ли он использовать шаблон по умолчанию
+        QMessageBox::StandardButton reply = QMessageBox::question(
+            this,
+            "Выбор шаблона",
+            "Использовать шаблон по умолчанию?\nНет - выбрать другой шаблон",
+            QMessageBox::Yes | QMessageBox::No);
+
+        if (reply == QMessageBox::Yes) {
+            templatePath = defaultTemplatePath;
+        } else {
+            // Если пользователь выбрал "Нет", открываем диалог выбора файла
+            templatePath = QFileDialog::getOpenFileName(
+                this,
+                "Выберите шаблон отчета",
+                QFileInfo(defaultTemplatePath).path(), // Открываем диалог в папке с шаблоном
+                "Word Documents (*.docx)"
+                );
+        }
+    } else {
+        // Если шаблона по умолчанию нет, просто показываем диалог выбора файла
+        templatePath = QFileDialog::getOpenFileName(
+        this,
+        "Выберите шаблон отчета",
+        "",
+        "Word Documents (*.docx)"
+        );
+    }
+    if (templatePath.isEmpty()) return;
+    // Создаем имя для выходного файла на основе текущей даты и времени
+    QString defaultOutputPath = QString("C:/Qt/Raboti/vfd/reports/Отчет_%1.docx")
+                                    .arg(QDateTime::currentDateTime().toString("dd_MM_yyyy_hh_mm"));
+
+    // Убедимся, что директория существует
+    QDir().mkpath(QFileInfo(defaultOutputPath).path());
+    // Запрашиваем путь для сохранения отчета
+    QString outputPath = QFileDialog::getSaveFileName(
+        this,
+        "Сохранить отчет как",
+        defaultOutputPath,
+        "Word Documents (*.docx)"
+        );
+
+    if (outputPath.isEmpty()) return;
+
+    // Создаем отчет
+    createWordReport(templatePath, outputPath);
 }

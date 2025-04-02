@@ -36,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , modbusDevice(nullptr) // инициализация клиента как nullptr
     , userSelected(false)
+    , adminWindow(nullptr)
+    , isAdminUser(false)
 
 {
 
@@ -75,15 +77,23 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setupStatusBar();
 
+
     disableControls();
 
     connect(ui->startButton, &QPushButton::clicked, this, &MainWindow::startDrive);
     connect(ui->stopButton, &QPushButton::clicked, this, &MainWindow::stopDrive);
     connect(ui->resetButton, &QPushButton::clicked, this, &MainWindow::resetDrive);
     connect(ui->actionExportReport, &QAction::triggered, this, &MainWindow::on_actionExportReport_triggered);
+    // Соединяем кнопку установки скорости с соответствующим слотом
+    connect(ui->setSpeedButton, &QPushButton::clicked, this, &MainWindow::onManualSpeedEntered);
+
+    // Также можно добавить обработку нажатия Enter в поле ввода
+    connect(ui->speedInput, &QLineEdit::returnPressed, this, &MainWindow::onManualSpeedEntered);
+
+
 
     statistic = new Statistic(this);
-
+    setupAdminMenu();
 
 
 
@@ -287,7 +297,7 @@ void MainWindow::applySettings(QString connectionType, int comPort, int baudRate
     // После подключения можно начать считывать данные
     if (modbusDevice) {
 
-        QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 5);  // Чтение регистра с адреса 0
+        QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 6);  // Чтение регистра с адреса 0
         if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {  // Slave ID = 1
             connect(reply, &QModbusReply::finished, this, &MainWindow::onModbusReadReady);
         }
@@ -327,6 +337,9 @@ void MainWindow::onModbusReadReady()
         if (ui->progressBar22) {
             ui->progressBar22->setValue(voltage);
         }
+        if (ui->progressBar4) {
+            ui->progressBar4->setValue(temperature);
+        }
 
         // Обновляем QML интерфейс
         if (qmlWidget) {
@@ -349,6 +362,7 @@ void MainWindow::onModbusReadReady()
         emit motorSpeedUpdated(speed);
         emit progressbars(current);
         emit progressbars2(voltage);
+        emit progressbars4(temperature);
 
         successPackets++;
     } else {
@@ -464,15 +478,7 @@ void MainWindow::setupStatusBar()
 
     // Создаем лейбл для информации о подключении
     QLabel *connectionInfoLabel = new QLabel(this);
-    //connectionInfoLabel->setFrameStyle(QFrame::NoFrame); // Убираем рамку
-    //connectionInfoLabel->setMinimumWidth(300);
-    //connectionInfoLabel->setText("TCP/RTU     Packets : 0    Erros : 0");
 
-
-
-    // Создаем пустой растягивающийся виджет для отступа слева
-    //QWidget *spacer = new QWidget(this);
-    //spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     // Устанавливаем иконку статуса
     QPixmap redIcon("C:/Qt/Raboti/vfd/icon/icon22.svg");
@@ -518,6 +524,7 @@ void MainWindow::on_action_2_triggered()
         connect(this, &MainWindow::motorSpeedUpdated, statisticTwoWindow, &statistictwo::receiveMotorSpeed);
         connect(this, &MainWindow::progressbars, statisticTwoWindow, &statistictwo::receiveProgressbars);
         connect(this, &MainWindow::progressbars2, statisticTwoWindow, &statistictwo::receiveProgressbars2);
+        connect(this, &MainWindow::progressbars4, statisticTwoWindow, &statistictwo::receiveProgressbars4);
     }
     statisticTwoWindow->show();
     statisticTwoWindow->raise();    // Поднимаем окно на передний план
@@ -532,6 +539,19 @@ void MainWindow::disableControls()
     ui->qmlWidget->setEnabled(false);
     ui->progressBar1->setEnabled(false);
     ui->progressBar22->setEnabled(false);
+    ui->progressBar4->setEnabled(false);
+    ui->startButton->setEnabled(false);
+    ui->stopButton->setEnabled(false);
+    ui->resetButton->setEnabled(false);
+    ui->speedInput->setEnabled(false);
+    ui->setSpeedButton->setEnabled(false);
+    ui->disconnectButton->setEnabled(false);
+    ui->menustatistictwo->setEnabled(false);
+    ui->menuwarnings->setEnabled(false);
+    if (adminAction) {
+        adminAction->setEnabled(false);
+    }
+
 
     // Показываем сообщение пользователю
     statusBar()->showMessage("Выберите пользователя перед подключением к устройству", 5000);
@@ -544,6 +564,18 @@ void MainWindow::enableControls()
     ui->qmlWidget->setEnabled(true);
     ui->progressBar1->setEnabled(true);
     ui->progressBar22->setEnabled(true);
+    ui->progressBar4->setEnabled(true);
+    ui->startButton->setEnabled(true);
+    ui->stopButton->setEnabled(true);
+    ui->resetButton->setEnabled(true);
+    ui->speedInput->setEnabled(true);
+    ui->setSpeedButton->setEnabled(true);
+    ui->disconnectButton->setEnabled(true);
+    ui->menustatistictwo->setEnabled(true);
+    ui->menuwarnings->setEnabled(true);
+    if (adminAction) {
+        adminAction->setEnabled(isAdminUser);
+    }
 
     statusBar()->showMessage("Пользователь выбран: " + currentUser, 5000);
 }
@@ -552,6 +584,23 @@ void MainWindow::setCurrentUser(const QString &username)
 {
     currentUser = username;
     userSelected = true;
+
+    // Проверяем, является ли пользователь администратором
+
+    QSqlQuery query(db);
+
+    query.prepare("SELECT role FROM users WHERE username = :username");
+
+    query.bindValue(":username", username);
+
+
+
+    if (query.exec() && query.next()) {
+
+        isAdminUser = (query.value(0).toString().toLower() == "admin");
+
+    }
+
 
     // Создаем таблицу для пользователя
     if (createUserTable(username)) {
@@ -997,4 +1046,90 @@ void MainWindow::on_actionExportReport_triggered()
 
 
 }
+void MainWindow::openAdminPanel()
 
+{
+
+    if (!isAdminUser) {
+
+        QMessageBox::warning(this, "Ошибка",
+
+                             "Доступ запрещен. Необходимы права администратора.");
+
+        return;
+
+    }
+
+
+
+    if (!adminWindow) {
+
+        adminWindow = new Admin(this);
+
+    }
+
+    adminWindow->show();
+
+}
+
+
+void MainWindow::setupAdminMenu()
+
+{
+
+    // Создаем действие для админ-панели
+
+    QAction *adminAction = new QAction("Панель администратора", this);
+
+
+
+    // Добавляем действие в меню
+
+    ui->menubar->addAction(adminAction);
+
+
+
+    // Соединяем сигнал с нашим слотом
+
+    connect(adminAction, &QAction::triggered, this, &MainWindow::openAdminPanel);
+
+}
+
+
+
+void MainWindow::onManualSpeedEntered()
+{
+    // Получаем введенное значение скорости
+    bool ok;
+    int speed = ui->speedInput->text().toInt(&ok);
+
+    // Проверяем, успешно ли преобразовано число
+    if (!ok) {
+        QMessageBox::warning(this, "Ошибка", "Введите корректное числовое значение");
+        return;
+    }
+
+    // Проверяем диапазон
+    if (speed < 0 || speed > 3000) {
+        QMessageBox::warning(this, "Ошибка", "Значение скорости должно быть от 0 до 3000");
+        return;
+    }
+
+    // Преобразуем скорость в значение для регистра
+    int speedValue = (speed * MAX_SPEED_VALUE) / 3000;
+
+    // Отправляем команду на изменение скорости
+    QModbusDataUnit writeRequest(QModbusDataUnit::HoldingRegisters, REG_SPEED, 1);
+    writeRequest.setValue(0, speedValue);
+
+    if (auto *reply = modbusDevice->sendWriteRequest(writeRequest, 1)) {
+        connect(reply, &QModbusReply::finished, this, [this, reply, speed]() {
+            if (reply->error() == QModbusDevice::NoError) {
+                ui->statusbar->showMessage(QString("Установлена скорость: %1 об/мин").arg(speed), 3000);
+            } else {
+                ui->statusbar->showMessage(QString("Ошибка установки скорости: %1").arg(reply->errorString()), 3000);
+            }
+            reply->deleteLater();
+        });
+    }
+}

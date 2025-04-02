@@ -137,8 +137,8 @@ QProgressBar::chunk {
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>130</y>
+      <x>320</x>
+      <y>180</y>
       <width>296</width>
       <height>171</height>
      </rect>
@@ -152,15 +152,33 @@ QProgressBar::chunk {
           <string>Запуск устройства</string>
          </property>
          <property name="styleSheet">
-          <string notr="true"> QPushButton {
-       background-color: #2D2D2D; /* Цвет фона */
-       color: #FFFFFF; /* Цвет текста по умолчанию */
-       border: 1px solid #3E3E3E;
-       padding: 5px;
-   }
-   QPushButton:hover {
-       background-color: #3E3E3E; /* Цвет фона при наведении */
-   }</string>
+          <string notr="true">QPushButton {
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+    border: none;
+    min-height: 25px;
+    max-width: 150px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+}
+
+QPushButton:disabled {
+    background: #9E9E9E;
+    color: #E0E0E0;
+}</string>
          </property>
          <property name="text">
           <string>Пуск</string>
@@ -177,14 +195,32 @@ QProgressBar::chunk {
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton {
-       background-color: #2D2D2D; /* Цвет фона */
-       color: #FFFFFF; /* Цвет текста по умолчанию */
-       border: 1px solid #3E3E3E;
-       padding: 5px;
-   }
-   QPushButton:hover {
-       background-color: #3E3E3E; /* Цвет фона при наведении */
-   }</string>
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+    border: none;
+    min-height: 25px;
+    max-width: 150px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+}
+
+QPushButton:disabled {
+    background: #9E9E9E;
+    color: #E0E0E0;
+}</string>
          </property>
          <property name="text">
           <string>Стоп</string>
@@ -201,14 +237,32 @@ QProgressBar::chunk {
          </property>
          <property name="styleSheet">
           <string notr="true">QPushButton {
-       background-color: #2D2D2D; /* Цвет фона */
-       color: #FFFFFF; /* Цвет текста по умолчанию */
-       border: 1px solid #3E3E3E;
-       padding: 5px;
-   }
-   QPushButton:hover {
-       background-color: #3E3E3E; /* Цвет фона при наведении */
-   }</string>
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+    border: none;
+    min-height: 25px;
+    max-width: 150px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+}
+
+QPushButton:disabled {
+    background: #9E9E9E;
+    color: #E0E0E0;
+}</string>
          </property>
          <property name="text">
           <string>Сброс</string>
@@ -245,27 +299,160 @@ QProgressBar::chunk {
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>290</y>
-      <width>93</width>
-      <height>29</height>
+      <y>310</y>
+      <width>100</width>
+      <height>35</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-    QPushButton {
-        background-color: #2D2D2D;
-        color: #FF0000;
-        border: 1px solid #3E3E3E;
-        padding: 5px;
-        min-width: 80px;
-    }
-    QPushButton:hover {
-        background-color: #3E3E3E;
-    }
-</string>
+     <string notr="true">QPushButton {
+    text-align: center;
+    color: #FF3333;  /* Улучшенный оттенок красного для лучшей видимости */
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    /* Более темный фон для лучшего контраста с красным текстом */
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #3D3D3D, stop:0.5 #505050, stop:1 #3D3D3D);
+    border: none;
+    min-height: 25px;
+    min-width: 80px;
+    max-width: 150px;
+    font-size: 13px;
+    /* Добавляем тень текста для резкости */
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+}
+
+QPushButton:hover {
+    color: #FF4D4D; /* Чуть светлее при наведении для обратной связи */
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #454545, stop:0.5 #5A5A5A, stop:1 #454545);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #404040, stop:1 #303030);
+    color: #FF1A1A;  /* Немного более темный красный при нажатии */
+}
+
+QPushButton:disabled {
+    background: #7E7E7E; /* Более темный серый для отключенного состояния */
+    color: #FFACAC;  /* Улучшенный бледно-красный для лучшей видимости */
+    text-shadow: none; /* Убираем тень для отключенного состояния */
+}</string>
     </property>
     <property name="text">
      <string>ВЫХОД</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar4">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>140</y>
+      <width>451</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+    background-color: #f0f0f0;               /* Светлый фон */
+    border: 1px solid #696969;               /* Светло-серая граница */
+    border-radius: 10px;                     /* Закругленные края */
+    text-align: center;                      /* Центрирование текста */
+    font-size: 12px;                         /* Размер шрифта */
+    color: #555555;                          /* Темный цвет текста */
+    min-height: 25px;                        /* Высота прогресс-бара */
+}
+
+QProgressBar::chunk {
+    background-color: qlineargradient(
+        spread:pad, x1:0, y1:0, x2:1, y2:1,
+        stop:0 #d0d0d0, stop:1 #696969);     /* Матовый серый градиент */
+    border-radius: 8px;                      /* Закругленные края сегмента */
+    margin: 2px;                             /* Отступы от краев */
+}
+</string>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+    <property name="format">
+     <string>%v Temp</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="speedInput">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>316</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 10px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #0B63F6;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}
+
+</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="setSpeedButton">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>309</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+    border: none;
+    min-height: 25px;
+    max-width: 150px;
+}
+
+QPushButton:hover {
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+}
+
+QPushButton:disabled {
+    background: #9E9E9E;
+    color: #E0E0E0;
+}</string>
+    </property>
+    <property name="text">
+     <string>Задать</string>
     </property>
    </widget>
   </widget>
@@ -361,9 +548,16 @@ QMenu::indicator {
     </property>
     <addaction name="actionOpenManual"/>
    </widget>
+   <widget class="QMenu" name="menuwarnings">
+    <property name="title">
+     <string>Ошибки</string>
+    </property>
+    <addaction name="actionWarnings"/>
+   </widget>
    <addaction name="menuStatistic"/>
    <addaction name="menuConnection_type"/>
    <addaction name="menustatistictwo"/>
+   <addaction name="menuwarnings"/>
    <addaction name="menuModbusManual"/>
   </widget>
   <action name="actionrtu">
@@ -402,6 +596,16 @@ QMenu::indicator {
   <action name="actionExportReport">
    <property name="text">
     <string>Составить отчет</string>
+   </property>
+  </action>
+  <action name="Admin">
+   <property name="text">
+    <string>Открыть панель администрирование</string>
+   </property>
+  </action>
+  <action name="actionWarnings">
+   <property name="text">
+    <string>Warnings</string>
    </property>
   </action>
  </widget>

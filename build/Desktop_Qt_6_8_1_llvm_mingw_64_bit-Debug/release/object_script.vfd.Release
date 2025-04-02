@@ -1,3 +1,4 @@
+release/admin.o
 release/connectionsettings.o
 release/main.o
 release/mainwindow.o
@@ -7,6 +8,7 @@ release/statistic.o
 release/statistictwo.o
 release/qrc_dialcontrol.o
 release/qrc_qmake_qmake_immediate.o
+release/moc_admin.o
 release/moc_connectionsettings.o
 release/moc_mainwindow.o
 release/moc_qcustomplot.o

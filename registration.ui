@@ -30,8 +30,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>501</width>
-     <height>310</height>
+     <width>626</width>
+     <height>349</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -46,9 +46,21 @@
      <widget class="QLineEdit" name="confirmPasswordLineEdit">
       <property name="styleSheet">
        <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
     padding: 5px;
-    border: 1px solid #3E3E3E;
-    border-radius: 4px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
 }</string>
       </property>
       <property name="echoMode">
@@ -77,9 +89,21 @@
      <widget class="QLineEdit" name="activationCodeLineEdit">
       <property name="styleSheet">
        <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
     padding: 5px;
-    border: 1px solid #3E3E3E;
-    border-radius: 4px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
 }</string>
       </property>
       <property name="maxLength">
@@ -101,9 +125,21 @@
      <widget class="QLineEdit" name="passwordLineEdit">
       <property name="styleSheet">
        <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
     padding: 5px;
-    border: 1px solid #3E3E3E;
-    border-radius: 4px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
 }</string>
       </property>
       <property name="maxLength">
@@ -128,9 +164,21 @@
      <widget class="QLineEdit" name="usernameLineEdit">
       <property name="styleSheet">
        <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
     padding: 5px;
-    border: 1px solid #3E3E3E;
-    border-radius: 4px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
 }</string>
       </property>
       <property name="maxLength">

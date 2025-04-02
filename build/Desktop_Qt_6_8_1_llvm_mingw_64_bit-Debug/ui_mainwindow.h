@@ -14,6 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -35,6 +36,8 @@ public:
     QAction *actionRegister1;
     QAction *actionRegister;
     QAction *actionExportReport;
+    QAction *Admin;
+    QAction *actionWarnings;
     QWidget *centralwidget;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -50,12 +53,16 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QLabel *statusLabel;
     QPushButton *disconnectButton;
+    QProgressBar *progressBar4;
+    QLineEdit *speedInput;
+    QPushButton *setSpeedButton;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menuStatistic;
     QMenu *menuConnection_type;
     QMenu *menustatistictwo;
     QMenu *menuModbusManual;
+    QMenu *menuwarnings;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -83,6 +90,10 @@ public:
         actionRegister->setObjectName("actionRegister");
         actionExportReport = new QAction(MainWindow);
         actionExportReport->setObjectName("actionExportReport");
+        Admin = new QAction(MainWindow);
+        Admin->setObjectName("Admin");
+        actionWarnings = new QAction(MainWindow);
+        actionWarnings->setObjectName("actionWarnings");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         horizontalLayoutWidget = new QWidget(centralwidget);
@@ -154,7 +165,7 @@ public:
         progressBar22->setOrientation(Qt::Orientation::Horizontal);
         verticalLayoutWidget = new QWidget(centralwidget);
         verticalLayoutWidget->setObjectName("verticalLayoutWidget");
-        verticalLayoutWidget->setGeometry(QRect(330, 130, 296, 171));
+        verticalLayoutWidget->setGeometry(QRect(320, 180, 296, 171));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -162,15 +173,33 @@ public:
         horizontalLayout_2->setObjectName("horizontalLayout_2");
         startButton = new QPushButton(verticalLayoutWidget);
         startButton->setObjectName("startButton");
-        startButton->setStyleSheet(QString::fromUtf8(" QPushButton {\n"
-"       background-color: #2D2D2D; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 */\n"
-"       color: #FFFFFF; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 \320\277\320\276 \321\203\320\274\320\276\320\273\321\207\320\260\320\275\320\270\321\216 */\n"
-"       border: 1px solid #3E3E3E;\n"
-"       padding: 5px;\n"
-"   }\n"
-"   QPushButton:hover {\n"
-"       background-color: #3E3E3E; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 \320\277\321\200\320\270 \320\275\320\260\320\262\320\265\320\264\320\265\320\275\320\270\320\270 */\n"
-"   }"));
+        startButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    text-align: center;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"    border: none;\n"
+"    min-height: 25px;\n"
+"    max-width: 150px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background: #9E9E9E;\n"
+"    color: #E0E0E0;\n"
+"}"));
         startButton->setCheckable(false);
 
         horizontalLayout_2->addWidget(startButton);
@@ -178,14 +207,32 @@ public:
         stopButton = new QPushButton(verticalLayoutWidget);
         stopButton->setObjectName("stopButton");
         stopButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"       background-color: #2D2D2D; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 */\n"
-"       color: #FFFFFF; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 \320\277\320\276 \321\203\320\274\320\276\320\273\321\207\320\260\320\275\320\270\321\216 */\n"
-"       border: 1px solid #3E3E3E;\n"
-"       padding: 5px;\n"
-"   }\n"
-"   QPushButton:hover {\n"
-"       background-color: #3E3E3E; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 \320\277\321\200\320\270 \320\275\320\260\320\262\320\265\320\264\320\265\320\275\320\270\320\270 */\n"
-"   }"));
+"    text-align: center;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"    border: none;\n"
+"    min-height: 25px;\n"
+"    max-width: 150px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background: #9E9E9E;\n"
+"    color: #E0E0E0;\n"
+"}"));
         stopButton->setCheckable(false);
 
         horizontalLayout_2->addWidget(stopButton);
@@ -193,14 +240,32 @@ public:
         resetButton = new QPushButton(verticalLayoutWidget);
         resetButton->setObjectName("resetButton");
         resetButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"       background-color: #2D2D2D; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 */\n"
-"       color: #FFFFFF; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 \320\277\320\276 \321\203\320\274\320\276\320\273\321\207\320\260\320\275\320\270\321\216 */\n"
-"       border: 1px solid #3E3E3E;\n"
-"       padding: 5px;\n"
-"   }\n"
-"   QPushButton:hover {\n"
-"       background-color: #3E3E3E; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 \320\277\321\200\320\270 \320\275\320\260\320\262\320\265\320\264\320\265\320\275\320\270\320\270 */\n"
-"   }"));
+"    text-align: center;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"    border: none;\n"
+"    min-height: 25px;\n"
+"    max-width: 150px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background: #9E9E9E;\n"
+"    color: #E0E0E0;\n"
+"}"));
 
         horizontalLayout_2->addWidget(resetButton);
 
@@ -228,19 +293,122 @@ public:
 
         disconnectButton = new QPushButton(centralwidget);
         disconnectButton->setObjectName("disconnectButton");
-        disconnectButton->setGeometry(QRect(690, 290, 93, 29));
-        disconnectButton->setStyleSheet(QString::fromUtf8("\n"
-"    QPushButton {\n"
-"        background-color: #2D2D2D;\n"
-"        color: #FF0000;\n"
-"        border: 1px solid #3E3E3E;\n"
-"        padding: 5px;\n"
-"        min-width: 80px;\n"
-"    }\n"
-"    QPushButton:hover {\n"
-"        background-color: #3E3E3E;\n"
-"    }\n"
+        disconnectButton->setGeometry(QRect(690, 310, 100, 35));
+        disconnectButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    text-align: center;\n"
+"    color: #FF3333;  /* \320\243\320\273\321\203\321\207\321\210\320\265\320\275\320\275\321\213\320\271 \320\276\321\202\321\202\320\265\320\275\320\276\320\272 \320\272\321\200\320\260\321\201\320\275\320\276\320\263\320\276 \320\264\320\273\321\217 \320\273\321\203\321\207\321\210\320\265\320\271 \320\262\320\270\320\264\320\270\320\274\320\276\321\201\321\202\320\270 */\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    /* \320\221\320\276\320\273\320\265\320\265 \321\202\320\265\320\274\320\275\321\213\320\271 \321\204\320\276\320\275 \320\264\320\273\321\217 \320\273\321\203\321\207\321\210\320\265\320\263\320\276 \320\272\320\276\320\275\321\202\321\200\320\260\321\201\321\202\320\260 \321\201 \320\272\321\200\320\260\321\201\320\275\321\213\320\274 \321\202\320\265\320\272\321\201\321\202\320\276\320\274 */\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0"
+                        " #3D3D3D, stop:0.5 #505050, stop:1 #3D3D3D);\n"
+"    border: none;\n"
+"    min-height: 25px;\n"
+"    min-width: 80px;\n"
+"    max-width: 150px;\n"
+"    font-size: 13px;\n"
+"    /* \320\224\320\276\320\261\320\260\320\262\320\273\321\217\320\265\320\274 \321\202\320\265\320\275\321\214 \321\202\320\265\320\272\321\201\321\202\320\260 \320\264\320\273\321\217 \321\200\320\265\320\267\320\272\320\276\321\201\321\202\320\270 */\n"
+"    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);\n"
+"    letter-spacing: 0.5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    color: #FF4D4D; /* \320\247\321\203\321\202\321\214 \321\201\320\262\320\265\321\202\320\273\320\265\320\265 \320\277\321\200\320\270 \320\275\320\260\320\262\320\265\320\264\320\265\320\275\320\270\320\270 \320\264\320\273\321\217 \320\276\320\261\321\200\320\260\321\202\320\275\320\276\320\271 \321\201\320\262\321\217\320\267\320\270 */\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #454545, stop:0"
+                        ".5 #5A5A5A, stop:1 #454545);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #404040, stop:1 #303030);\n"
+"    color: #FF1A1A;  /* \320\235\320\265\320\274\320\275\320\276\320\263\320\276 \320\261\320\276\320\273\320\265\320\265 \321\202\320\265\320\274\320\275\321\213\320\271 \320\272\321\200\320\260\321\201\320\275\321\213\320\271 \320\277\321\200\320\270 \320\275\320\260\320\266\320\260\321\202\320\270\320\270 */\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background: #7E7E7E; /* \320\221\320\276\320\273\320\265\320\265 \321\202\320\265\320\274\320\275\321\213\320\271 \321\201\320\265\321\200\321\213\320\271 \320\264\320\273\321\217 \320\276\321\202\320\272\320\273\321\216\321\207\320\265\320\275\320\275\320\276\320\263\320\276 \321\201\320\276\321\201\321\202\320\276\321\217\320\275\320\270\321\217 */\n"
+"    color: #FFACAC;  /* \320\243\320\273\321\203\321\207\321\210\320\265\320\275\320"
+                        "\275\321\213\320\271 \320\261\320\273\320\265\320\264\320\275\320\276-\320\272\321\200\320\260\321\201\320\275\321\213\320\271 \320\264\320\273\321\217 \320\273\321\203\321\207\321\210\320\265\320\271 \320\262\320\270\320\264\320\270\320\274\320\276\321\201\321\202\320\270 */\n"
+"    text-shadow: none; /* \320\243\320\261\320\270\321\200\320\260\320\265\320\274 \321\202\320\265\320\275\321\214 \320\264\320\273\321\217 \320\276\321\202\320\272\320\273\321\216\321\207\320\265\320\275\320\275\320\276\320\263\320\276 \321\201\320\276\321\201\321\202\320\276\321\217\320\275\320\270\321\217 */\n"
+"}"));
+        progressBar4 = new QProgressBar(centralwidget);
+        progressBar4->setObjectName("progressBar4");
+        progressBar4->setGeometry(QRect(320, 140, 451, 31));
+        progressBar4->setStyleSheet(QString::fromUtf8("QProgressBar {\n"
+"    background-color: #f0f0f0;               /* \320\241\320\262\320\265\321\202\320\273\321\213\320\271 \321\204\320\276\320\275 */\n"
+"    border: 1px solid #696969;               /* \320\241\320\262\320\265\321\202\320\273\320\276-\321\201\320\265\321\200\320\260\321\217 \320\263\321\200\320\260\320\275\320\270\321\206\320\260 */\n"
+"    border-radius: 10px;                     /* \320\227\320\260\320\272\321\200\321\203\320\263\320\273\320\265\320\275\320\275\321\213\320\265 \320\272\321\200\320\260\321\217 */\n"
+"    text-align: center;                      /* \320\246\320\265\320\275\321\202\321\200\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
+"    font-size: 12px;                         /* \320\240\320\260\320\267\320\274\320\265\321\200 \321\210\321\200\320\270\321\204\321\202\320\260 */\n"
+"    color: #555555;                          /* \320\242\320\265\320\274\320\275\321\213\320\271 \321\206\320\262\320\265"
+                        "\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
+"    min-height: 25px;                        /* \320\222\321\213\321\201\320\276\321\202\320\260 \320\277\321\200\320\276\320\263\321\200\320\265\321\201\321\201-\320\261\320\260\321\200\320\260 */\n"
+"}\n"
+"\n"
+"QProgressBar::chunk {\n"
+"    background-color: qlineargradient(\n"
+"        spread:pad, x1:0, y1:0, x2:1, y2:1,\n"
+"        stop:0 #d0d0d0, stop:1 #696969);     /* \320\234\320\260\321\202\320\276\320\262\321\213\320\271 \321\201\320\265\321\200\321\213\320\271 \320\263\321\200\320\260\320\264\320\270\320\265\320\275\321\202 */\n"
+"    border-radius: 8px;                      /* \320\227\320\260\320\272\321\200\321\203\320\263\320\273\320\265\320\275\320\275\321\213\320\265 \320\272\321\200\320\260\321\217 \321\201\320\265\320\263\320\274\320\265\320\275\321\202\320\260 */\n"
+"    margin: 2px;                             /* \320\236\321\202\321\201\321\202\321\203\320\277\321\213 \320\276\321\202 \320\272\321\200\320\260\320\265\320\262"
+                        " */\n"
+"}\n"
 ""));
+        progressBar4->setValue(24);
+        speedInput = new QLineEdit(centralwidget);
+        speedInput->setObjectName("speedInput");
+        speedInput->setGeometry(QRect(30, 316, 121, 31));
+        speedInput->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: #F5F5F5;\n"
+"    color: #333333;\n"
+"    border: 1px solid #BBBBBB;\n"
+"    border-radius: 5px;\n"
+"    padding: 5px;\n"
+"    min-height: 10px;\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid #0B63F6;\n"
+"}\n"
+"\n"
+"QLineEdit:disabled {\n"
+"    background-color: #E0E0E0;\n"
+"    color: #9E9E9E;\n"
+"}\n"
+"\n"
+""));
+        setSpeedButton = new QPushButton(centralwidget);
+        setSpeedButton->setObjectName("setSpeedButton");
+        setSpeedButton->setGeometry(QRect(160, 309, 111, 41));
+        setSpeedButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    text-align: center;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"    border: none;\n"
+"    min-height: 25px;\n"
+"    max-width: 150px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
+"}\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background: #9E9E9E;\n"
+"    color: #E0E0E0;\n"
+"}"));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -302,11 +470,14 @@ public:
         menustatistictwo->setObjectName("menustatistictwo");
         menuModbusManual = new QMenu(menubar);
         menuModbusManual->setObjectName("menuModbusManual");
+        menuwarnings = new QMenu(menubar);
+        menuwarnings->setObjectName("menuwarnings");
         MainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuStatistic->menuAction());
         menubar->addAction(menuConnection_type->menuAction());
         menubar->addAction(menustatistictwo->menuAction());
+        menubar->addAction(menuwarnings->menuAction());
         menubar->addAction(menuModbusManual->menuAction());
         menuStatistic->addSeparator();
         menuStatistic->addAction(action);
@@ -315,6 +486,7 @@ public:
         menuConnection_type->addAction(actionrtu);
         menustatistictwo->addAction(action_2);
         menuModbusManual->addAction(actionOpenManual);
+        menuwarnings->addAction(actionWarnings);
 
         retranslateUi(MainWindow);
         QObject::connect(menubar, &QMenuBar::triggered, MainWindow, qOverload<>(&QMainWindow::show));
@@ -335,6 +507,8 @@ public:
         actionRegister1->setText(QCoreApplication::translate("MainWindow", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214 \320\276\320\272\320\275\320\276 \321\200\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\320\270", nullptr));
         actionRegister->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
         actionExportReport->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\201\321\202\320\260\320\262\320\270\321\202\321\214 \320\276\321\202\321\207\320\265\321\202", nullptr));
+        Admin->setText(QCoreApplication::translate("MainWindow", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214 \320\277\320\260\320\275\320\265\320\273\321\214 \320\260\320\264\320\274\320\270\320\275\320\270\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265", nullptr));
+        actionWarnings->setText(QCoreApplication::translate("MainWindow", "Warnings", nullptr));
         progressBar1->setFormat(QCoreApplication::translate("MainWindow", "%v Amp", nullptr));
         progressBar22->setFormat(QCoreApplication::translate("MainWindow", "%v Volt", nullptr));
 #if QT_CONFIG(tooltip)
@@ -351,10 +525,13 @@ public:
         resetButton->setText(QCoreApplication::translate("MainWindow", "\320\241\320\261\321\200\320\276\321\201", nullptr));
         statusLabel->setText(QString());
         disconnectButton->setText(QCoreApplication::translate("MainWindow", "\320\222\320\253\320\245\320\236\320\224", nullptr));
+        progressBar4->setFormat(QCoreApplication::translate("MainWindow", "%v Temp", nullptr));
+        setSpeedButton->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\320\264\320\260\321\202\321\214", nullptr));
         menuStatistic->setTitle(QCoreApplication::translate("MainWindow", "\320\220\320\262\321\202\320\276\321\200\320\270\320\267\320\260\321\206\320\270\321\217", nullptr));
         menuConnection_type->setTitle(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270 \320\277\320\276\320\264\320\272\320\273\321\216\321\207\320\265\320\275\320\270\321\217", nullptr));
         menustatistictwo->setTitle(QCoreApplication::translate("MainWindow", "\320\223\321\200\320\260\321\204\320\270\320\272\320\270", nullptr));
         menuModbusManual->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\260\320\275\321\203\320\260\320\273 \320\277\320\276 \320\277\321\200\320\276\321\202\320\276\320\272\320\276\320\273\321\203", nullptr));
+        menuwarnings->setTitle(QCoreApplication::translate("MainWindow", "\320\236\321\210\320\270\320\261\320\272\320\270", nullptr));
     } // retranslateUi
 
 };

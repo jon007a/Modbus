@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QtQml>
-
 #include <QPrinter>
 #include <QTextDocument>
 
@@ -13,6 +12,7 @@ int main(int argc, char *argv[])
     // Создаем и показываем главное окно
     MainWindow w;
     w.show();
+
 
     return a.exec(); // Запускаем главный цикл приложения
 }

@@ -49,6 +49,8 @@ static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringD
     "progressValue",
     "progressbars2",
     "progressValue2",
+    "progressbars4",
+    "progressValue4",
     "slaveConnected",
     "slaveDisconnected",
     "on_actionrtu_triggered",
@@ -81,7 +83,10 @@ static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringD
     "state",
     "on_disconnectButton_clicked",
     "on_actionRegister_triggered",
-    "on_actionExportReport_triggered"
+    "on_actionExportReport_triggered",
+    "openAdminPanel",
+    "setupAdminMenu",
+    "onManualSpeedEntered"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -93,67 +98,75 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      29,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  164,    2, 0x06,    1 /* Public */,
-       4,    1,  167,    2, 0x06,    3 /* Public */,
-       6,    1,  170,    2, 0x06,    5 /* Public */,
-       8,    1,  173,    2, 0x06,    7 /* Public */,
-      10,    0,  176,    2, 0x06,    9 /* Public */,
-      11,    0,  177,    2, 0x06,   10 /* Public */,
+       1,    1,  188,    2, 0x06,    1 /* Public */,
+       4,    1,  191,    2, 0x06,    3 /* Public */,
+       6,    1,  194,    2, 0x06,    5 /* Public */,
+       8,    1,  197,    2, 0x06,    7 /* Public */,
+      10,    1,  200,    2, 0x06,    9 /* Public */,
+      12,    0,  203,    2, 0x06,   11 /* Public */,
+      13,    0,  204,    2, 0x06,   12 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      12,    0,  178,    2, 0x08,   11 /* Private */,
-      13,    8,  179,    2, 0x08,   12 /* Private */,
-      22,    0,  196,    2, 0x08,   21 /* Private */,
-      23,    1,  197,    2, 0x08,   22 /* Private */,
-      25,    1,  200,    2, 0x08,   24 /* Private */,
-      26,    0,  203,    2, 0x08,   26 /* Private */,
-      27,    0,  204,    2, 0x08,   27 /* Private */,
-      28,    0,  205,    2, 0x08,   28 /* Private */,
-      29,    0,  206,    2, 0x08,   29 /* Private */,
-      30,    0,  207,    2, 0x08,   30 /* Private */,
-      31,    1,  208,    2, 0x08,   31 /* Private */,
-      33,    0,  211,    2, 0x08,   33 /* Private */,
-      34,    0,  212,    2, 0x08,   34 /* Private */,
-      35,    0,  213,    2, 0x08,   35 /* Private */,
-      36,    0,  214,    2, 0x08,   36 /* Private */,
-      37,    1,  215,    2, 0x08,   37 /* Private */,
-      40,    0,  218,    2, 0x08,   39 /* Private */,
-      41,    0,  219,    2, 0x08,   40 /* Private */,
-      42,    0,  220,    2, 0x08,   41 /* Private */,
+      14,    0,  205,    2, 0x08,   13 /* Private */,
+      15,    8,  206,    2, 0x08,   14 /* Private */,
+      24,    0,  223,    2, 0x08,   23 /* Private */,
+      25,    1,  224,    2, 0x08,   24 /* Private */,
+      27,    1,  227,    2, 0x08,   26 /* Private */,
+      28,    0,  230,    2, 0x08,   28 /* Private */,
+      29,    0,  231,    2, 0x08,   29 /* Private */,
+      30,    0,  232,    2, 0x08,   30 /* Private */,
+      31,    0,  233,    2, 0x08,   31 /* Private */,
+      32,    0,  234,    2, 0x08,   32 /* Private */,
+      33,    1,  235,    2, 0x08,   33 /* Private */,
+      35,    0,  238,    2, 0x08,   35 /* Private */,
+      36,    0,  239,    2, 0x08,   36 /* Private */,
+      37,    0,  240,    2, 0x08,   37 /* Private */,
+      38,    0,  241,    2, 0x08,   38 /* Private */,
+      39,    1,  242,    2, 0x08,   39 /* Private */,
+      42,    0,  245,    2, 0x08,   41 /* Private */,
+      43,    0,  246,    2, 0x08,   42 /* Private */,
+      44,    0,  247,    2, 0x08,   43 /* Private */,
+      45,    0,  248,    2, 0x08,   44 /* Private */,
+      46,    0,  249,    2, 0x08,   45 /* Private */,
+      47,    0,  250,    2, 0x08,   46 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QReal,    3,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    7,
     QMetaType::Void, QMetaType::Int,    9,
+    QMetaType::Void, QMetaType::Int,   11,
     QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::Int,   14,   15,   16,   17,   18,   19,   20,   21,
+    QMetaType::Void, QMetaType::QString, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::Int, QMetaType::QString, QMetaType::Int,   16,   17,   18,   19,   20,   21,   22,   23,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   24,
+    QMetaType::Void, QMetaType::Int,   26,
     QMetaType::Void, QMetaType::QReal,    3,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Bool, QMetaType::QString,   32,
+    QMetaType::Bool, QMetaType::QString,   34,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 38,   39,
+    QMetaType::Void, 0x80000000 | 40,   41,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -180,6 +193,9 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'progressbars2'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'progressbars4'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'slaveConnected'
@@ -235,6 +251,12 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_actionRegister_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_actionExportReport_triggered'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'openAdminPanel'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'setupAdminMenu'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'onManualSpeedEntered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -249,28 +271,32 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->motorSpeedUpdated((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 2: _t->progressbars((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 3: _t->progressbars2((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 4: _t->slaveConnected(); break;
-        case 5: _t->slaveDisconnected(); break;
-        case 6: _t->on_actionrtu_triggered(); break;
-        case 7: _t->applySettings((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[8]))); break;
-        case 8: _t->onModbusReadReady(); break;
-        case 9: _t->onSliderValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 10: _t->sendSpeedChange((*reinterpret_cast< std::add_pointer_t<qreal>>(_a[1]))); break;
-        case 11: _t->requestDataFromModbus(); break;
-        case 12: _t->onSlaveConnected(); break;
-        case 13: _t->onSlaveDisconnected(); break;
-        case 14: _t->on_action_triggered(); break;
-        case 15: _t->on_action_2_triggered(); break;
-        case 16: { bool _r = _t->createUserTable((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])));
+        case 4: _t->progressbars4((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 5: _t->slaveConnected(); break;
+        case 6: _t->slaveDisconnected(); break;
+        case 7: _t->on_actionrtu_triggered(); break;
+        case 8: _t->applySettings((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[5])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[6])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[7])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[8]))); break;
+        case 9: _t->onModbusReadReady(); break;
+        case 10: _t->onSliderValueChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 11: _t->sendSpeedChange((*reinterpret_cast< std::add_pointer_t<qreal>>(_a[1]))); break;
+        case 12: _t->requestDataFromModbus(); break;
+        case 13: _t->onSlaveConnected(); break;
+        case 14: _t->onSlaveDisconnected(); break;
+        case 15: _t->on_action_triggered(); break;
+        case 16: _t->on_action_2_triggered(); break;
+        case 17: { bool _r = _t->createUserTable((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 17: _t->on_actionOpenManual_triggered(); break;
-        case 18: _t->on_startButton_clicked(); break;
-        case 19: _t->on_stopButton_clicked(); break;
-        case 20: _t->on_resetButton_clicked(); break;
-        case 21: _t->onModbusStateChanged((*reinterpret_cast< std::add_pointer_t<QModbusDevice::State>>(_a[1]))); break;
-        case 22: _t->on_disconnectButton_clicked(); break;
-        case 23: _t->on_actionRegister_triggered(); break;
-        case 24: _t->on_actionExportReport_triggered(); break;
+        case 18: _t->on_actionOpenManual_triggered(); break;
+        case 19: _t->on_startButton_clicked(); break;
+        case 20: _t->on_stopButton_clicked(); break;
+        case 21: _t->on_resetButton_clicked(); break;
+        case 22: _t->onModbusStateChanged((*reinterpret_cast< std::add_pointer_t<QModbusDevice::State>>(_a[1]))); break;
+        case 23: _t->on_disconnectButton_clicked(); break;
+        case 24: _t->on_actionRegister_triggered(); break;
+        case 25: _t->on_actionExportReport_triggered(); break;
+        case 26: _t->openAdminPanel(); break;
+        case 27: _t->setupAdminMenu(); break;
+        case 28: _t->onManualSpeedEntered(); break;
         default: ;
         }
     }
@@ -305,16 +331,23 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
         }
         {
-            using _q_method_type = void (MainWindow::*)();
-            if (_q_method_type _q_method = &MainWindow::slaveConnected; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+            using _q_method_type = void (MainWindow::*)(int );
+            if (_q_method_type _q_method = &MainWindow::progressbars4; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 4;
                 return;
             }
         }
         {
             using _q_method_type = void (MainWindow::*)();
-            if (_q_method_type _q_method = &MainWindow::slaveDisconnected; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+            if (_q_method_type _q_method = &MainWindow::slaveConnected; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 5;
+                return;
+            }
+        }
+        {
+            using _q_method_type = void (MainWindow::*)();
+            if (_q_method_type _q_method = &MainWindow::slaveDisconnected; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
+                *result = 6;
                 return;
             }
         }
@@ -340,14 +373,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 29)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 29;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 29)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 25;
+        _id -= 29;
     }
     return _id;
 }
@@ -381,14 +414,21 @@ void MainWindow::progressbars2(int _t1)
 }
 
 // SIGNAL 4
-void MainWindow::slaveConnected()
+void MainWindow::progressbars4(int _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
 // SIGNAL 5
-void MainWindow::slaveDisconnected()
+void MainWindow::slaveConnected()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+}
+
+// SIGNAL 6
+void MainWindow::slaveDisconnected()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 QT_WARNING_POP

@@ -1,6 +1,5 @@
 #include "statistic.h"
 #include "ui_statistic.h"
-//#include "mainwindow.h"
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlError>

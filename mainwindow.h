@@ -21,6 +21,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDateTime>
+#include <admin.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -54,12 +55,16 @@ private slots:
     void on_disconnectButton_clicked();// Слот для кнопки отключения
     void on_actionRegister_triggered();
     void on_actionExportReport_triggered(); // word
+    void openAdminPanel();
+    void setupAdminMenu();
+    void onManualSpeedEntered();
 
 signals:
     void speedChanged(qreal speed); // Добавьте этот сигнал
     void motorSpeedUpdated(int motorSpeed);
     void progressbars(int progressValue);
     void progressbars2(int progressValue2);
+    void progressbars4(int progressValue4);
     void slaveConnected();    // Сигнал, когда устройство подключено
     void slaveDisconnected(); // Сигнал, когда устройство отключено
 
@@ -149,6 +154,11 @@ private:
         return QString("Connection_%1").arg(++counter);
     }
 
+
+    void setupComboBox();
+    Admin *adminWindow;
+    bool isAdminUser;
+    QAction *adminAction;
 };
 
 #endif // MAINWINDOW_H

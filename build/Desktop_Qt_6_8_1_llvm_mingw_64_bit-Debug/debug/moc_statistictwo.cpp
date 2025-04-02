@@ -49,6 +49,8 @@ static constexpr auto qt_meta_stringdata_ZN12statistictwoE = QtMocHelpers::strin
     "progressValue",
     "receiveProgressbars2",
     "progressValue2",
+    "receiveProgressbars4",
+    "progressValue4",
     "onXAxisRangeChanged",
     "QCPRange",
     "range"
@@ -63,7 +65,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12statistictwoE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,12 +73,13 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12statistictwoE[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   50,    2, 0x08,    1 /* Private */,
-       3,    0,   51,    2, 0x08,    2 /* Private */,
-       4,    1,   52,    2, 0x0a,    3 /* Public */,
-       6,    1,   55,    2, 0x0a,    5 /* Public */,
-       8,    1,   58,    2, 0x0a,    7 /* Public */,
-      10,    1,   61,    2, 0x0a,    9 /* Public */,
+       1,    0,   56,    2, 0x08,    1 /* Private */,
+       3,    0,   57,    2, 0x08,    2 /* Private */,
+       4,    1,   58,    2, 0x0a,    3 /* Public */,
+       6,    1,   61,    2, 0x0a,    5 /* Public */,
+       8,    1,   64,    2, 0x0a,    7 /* Public */,
+      10,    1,   67,    2, 0x0a,    9 /* Public */,
+      12,    1,   70,    2, 0x0a,   11 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,7 +87,8 @@ Q_CONSTINIT static const uint qt_meta_data_ZN12statistictwoE[] = {
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    7,
     QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, QMetaType::Int,   11,
+    QMetaType::Void, 0x80000000 | 13,   14,
 
        0        // eod
 };
@@ -111,6 +115,9 @@ Q_CONSTINIT const QMetaObject statistictwo::staticMetaObject = { {
         // method 'receiveProgressbars2'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'receiveProgressbars4'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'onXAxisRangeChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QCPRange &, std::false_type>
@@ -128,7 +135,8 @@ void statistictwo::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 2: _t->receiveMotorSpeed((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 3: _t->receiveProgressbars((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 4: _t->receiveProgressbars2((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 5: _t->onXAxisRangeChanged((*reinterpret_cast< std::add_pointer_t<QCPRange>>(_a[1]))); break;
+        case 5: _t->receiveProgressbars4((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->onXAxisRangeChanged((*reinterpret_cast< std::add_pointer_t<QCPRange>>(_a[1]))); break;
         default: ;
         }
     }
@@ -153,14 +161,14 @@ int statistictwo::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

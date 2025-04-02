@@ -43,30 +43,62 @@
      <widget class="QPushButton" name="autoFollowButton">
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: #2D2D2D;
+    text-align: center;
     color: #00FF00;  /* Зеленый цвет для состояния &quot;Вкл&quot; */
-    border: 1px solid #3E3E3E;
-    padding: 5px;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #606060, stop:1 #4A4A4A);
+    border: none;
     min-width: 150px;
     min-height: 30px;
-    border-radius: 4px;
+    font-size: 13px;
 }
 
 QPushButton:hover {
-    background-color: #3E3E3E;
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #6A6A6A, stop:1 #4A4A4A);
 }
 
 QPushButton:pressed {
-    background-color: #1E1E1E;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
 }
 
 QPushButton:checked {
-    color: #FF0000;  /* Красный цвет для состояния &quot;Выкл&quot; */
-    background-color: #2D2D2D;
+    /* Улучшенный красный цвет с лучшей видимостью */
+    color: #FF3333;
+    /* Добавляем тень текста для четкости */
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+    /* Более темный фон для лучшего контраста с красным */
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #3D3D3D, stop:0.5 #4D4D4D, stop:1 #3D3D3D);
 }
 
 QPushButton:checked:hover {
-    background-color: #3E3E3E;
+    color: #FF4D4D; /* Чуть светлее при наведении */
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #454545, stop:0.5 #555555, stop:1 #454545);
+}
+
+QPushButton:checked:pressed {
+    color: #FF1A1A; /* Чуть темнее при нажатии */
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #353535, stop:0.5 #454545, stop:1 #353535);
+}
+
+QPushButton:disabled {
+    background: #9E9E9E;
+    color: #A0FFA0;  /* Бледно-зеленый при отключении в невыбранном состоянии */
+    text-shadow: none; /* Убираем тень для отключенного состояния */
+}
+
+QPushButton:checked:disabled {
+    background: #9E9E9E;
+    color: #FFACAC;  /* Улучшенный бледно-красный для лучшей видимости */
+    text-shadow: none;
 }</string>
       </property>
       <property name="text">
@@ -117,7 +149,7 @@ QPushButton:checked:hover {
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -1,3 +1,4 @@
+debug/admin.o
 debug/connectionsettings.o
 debug/main.o
 debug/mainwindow.o
@@ -7,6 +8,7 @@ debug/statistic.o
 debug/statistictwo.o
 debug/qrc_dialcontrol.o
 debug/qrc_qmake_qmake_immediate.o
+debug/moc_admin.o
 debug/moc_connectionsettings.o
 debug/moc_mainwindow.o
 debug/moc_qcustomplot.o
