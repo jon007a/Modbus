@@ -12,7 +12,8 @@ Admin::Admin(QWidget *parent)
     , isEditMode(false)
 {
     ui->setupUi(this);
-    
+    setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/admin.png"));
+
     // Инициализация базы данных
     initDatabase();
     

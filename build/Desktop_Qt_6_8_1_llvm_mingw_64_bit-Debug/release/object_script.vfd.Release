@@ -1,5 +1,6 @@
 release/admin.o
 release/connectionsettings.o
+release/errorwindow.o
 release/main.o
 release/mainwindow.o
 release/qcustomplot.o
@@ -10,6 +11,7 @@ release/qrc_dialcontrol.o
 release/qrc_qmake_qmake_immediate.o
 release/moc_admin.o
 release/moc_connectionsettings.o
+release/moc_errorwindow.o
 release/moc_mainwindow.o
 release/moc_qcustomplot.o
 release/moc_registration.o

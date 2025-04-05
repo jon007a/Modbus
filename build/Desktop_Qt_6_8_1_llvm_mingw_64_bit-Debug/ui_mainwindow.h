@@ -38,6 +38,7 @@ public:
     QAction *actionExportReport;
     QAction *Admin;
     QAction *actionWarnings;
+    QAction *actionadminpanel;
     QWidget *centralwidget;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
@@ -63,6 +64,7 @@ public:
     QMenu *menustatistictwo;
     QMenu *menuModbusManual;
     QMenu *menuwarnings;
+    QMenu *menuAdmin;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -94,6 +96,8 @@ public:
         Admin->setObjectName("Admin");
         actionWarnings = new QAction(MainWindow);
         actionWarnings->setObjectName("actionWarnings");
+        actionadminpanel = new QAction(MainWindow);
+        actionadminpanel->setObjectName("actionadminpanel");
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         horizontalLayoutWidget = new QWidget(centralwidget);
@@ -417,7 +421,7 @@ public:
         MainWindow->setStatusBar(statusbar);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 33));
+        menubar->setGeometry(QRect(0, 0, 800, 37));
         menubar->setStyleSheet(QString::fromUtf8("QMenuBar {\n"
 "    background-color: #1E1E1E;\n"
 "    color: #D4D4D4;\n"
@@ -472,12 +476,15 @@ public:
         menuModbusManual->setObjectName("menuModbusManual");
         menuwarnings = new QMenu(menubar);
         menuwarnings->setObjectName("menuwarnings");
+        menuAdmin = new QMenu(menubar);
+        menuAdmin->setObjectName("menuAdmin");
         MainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuStatistic->menuAction());
         menubar->addAction(menuConnection_type->menuAction());
         menubar->addAction(menustatistictwo->menuAction());
         menubar->addAction(menuwarnings->menuAction());
+        menubar->addAction(menuAdmin->menuAction());
         menubar->addAction(menuModbusManual->menuAction());
         menuStatistic->addSeparator();
         menuStatistic->addAction(action);
@@ -487,6 +494,7 @@ public:
         menustatistictwo->addAction(action_2);
         menuModbusManual->addAction(actionOpenManual);
         menuwarnings->addAction(actionWarnings);
+        menuAdmin->addAction(actionadminpanel);
 
         retranslateUi(MainWindow);
         QObject::connect(menubar, &QMenuBar::triggered, MainWindow, qOverload<>(&QMainWindow::show));
@@ -496,7 +504,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Modbus \320\272\320\276\320\275\321\202\321\200\320\276\320\273\320\273\320\265\321\200", nullptr));
         actionrtu->setText(QCoreApplication::translate("MainWindow", "\320\262\320\260\321\200\320\270\320\260\320\275\321\202 \320\277\320\276\320\264\320\272\320\273\321\216\321\207\320\265\320\275\320\270\321\217", nullptr));
 #if QT_CONFIG(tooltip)
         actionrtu->setToolTip(QCoreApplication::translate("MainWindow", "\320\262\320\260\321\200\320\270\320\260\320\275\321\202 \320\277\320\276\320\264\320\272\320\273\321\216\321\207\320\265\320\275\320\270\321\217", nullptr));
@@ -509,6 +517,7 @@ public:
         actionExportReport->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\321\201\321\202\320\260\320\262\320\270\321\202\321\214 \320\276\321\202\321\207\320\265\321\202", nullptr));
         Admin->setText(QCoreApplication::translate("MainWindow", "\320\236\321\202\320\272\321\200\321\213\321\202\321\214 \320\277\320\260\320\275\320\265\320\273\321\214 \320\260\320\264\320\274\320\270\320\275\320\270\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265", nullptr));
         actionWarnings->setText(QCoreApplication::translate("MainWindow", "Warnings", nullptr));
+        actionadminpanel->setText(QCoreApplication::translate("MainWindow", "adminpanel", nullptr));
         progressBar1->setFormat(QCoreApplication::translate("MainWindow", "%v Amp", nullptr));
         progressBar22->setFormat(QCoreApplication::translate("MainWindow", "%v Volt", nullptr));
 #if QT_CONFIG(tooltip)
@@ -532,6 +541,7 @@ public:
         menustatistictwo->setTitle(QCoreApplication::translate("MainWindow", "\320\223\321\200\320\260\321\204\320\270\320\272\320\270", nullptr));
         menuModbusManual->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\260\320\275\321\203\320\260\320\273 \320\277\320\276 \320\277\321\200\320\276\321\202\320\276\320\272\320\276\320\273\321\203", nullptr));
         menuwarnings->setTitle(QCoreApplication::translate("MainWindow", "\320\236\321\210\320\270\320\261\320\272\320\270", nullptr));
+        menuAdmin->setTitle(QCoreApplication::translate("MainWindow", "\320\220\320\264\320\274\320\270\320\275\320\270\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265", nullptr));
     } // retranslateUi
 
 };

@@ -6,24 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
-    <height>352</height>
+    <width>650</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>335</height>
+    <width>650</width>
+    <height>370</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>50000</width>
-    <height>500000</height>
+    <width>650</width>
+    <height>370</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Создание пользователя</string>
   </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">

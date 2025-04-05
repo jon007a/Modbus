@@ -55,9 +55,15 @@ private slots:
     void on_disconnectButton_clicked();// Слот для кнопки отключения
     void on_actionRegister_triggered();
     void on_actionExportReport_triggered(); // word
-    void openAdminPanel();
-    void setupAdminMenu();
     void onManualSpeedEntered();
+
+    void on_actionadminpanel_triggered();
+
+    void on_actionWarnings_triggered();
+    void saveErrorToDatabase(int errorCode); // Метод для сохранения ошибки в БД
+    void readErrorStatus();
+    void setCurrentUserr(int userId);
+
 
 signals:
     void speedChanged(qreal speed); // Добавьте этот сигнал
@@ -74,6 +80,7 @@ public:
 
 
     void setCurrentUser(const QString &username); // Новый метод
+
 
 
 
@@ -134,6 +141,9 @@ private:
     void updateDriveStatus(quint16 statusWord);
 
 
+    void setupComboBox();
+
+
     void insertDataToUserTable(const QString &username,
                                quint16 controlWord,    // Регистр 0
                                quint16 statusWord,     // Регистр 1
@@ -154,9 +164,7 @@ private:
         return QString("Connection_%1").arg(++counter);
     }
 
-
-    void setupComboBox();
-    Admin *adminWindow;
+    int currentUserId; // Храните ID текущего пользователя
     bool isAdminUser;
     QAction *adminAction;
 };

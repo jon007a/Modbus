@@ -12,6 +12,7 @@ Registration::Registration(QWidget *parent) :
     ui(new Ui::Registration)
 {
     ui->setupUi(this);
+    setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/registry.png"));
 
     // Инициализация регулярных выражений
     usernameRegex = QRegularExpression("^[a-zA-Z0-9_-]{3,20}$");

@@ -41,9 +41,9 @@ public:
     {
         if (Registration->objectName().isEmpty())
             Registration->setObjectName("Registration");
-        Registration->resize(508, 352);
-        Registration->setMinimumSize(QSize(500, 335));
-        Registration->setMaximumSize(QSize(50000, 500000));
+        Registration->resize(650, 370);
+        Registration->setMinimumSize(QSize(650, 370));
+        Registration->setMaximumSize(QSize(650, 370));
         gridLayoutWidget = new QWidget(Registration);
         gridLayoutWidget->setObjectName("gridLayoutWidget");
         gridLayoutWidget->setGeometry(QRect(10, 10, 626, 349));
@@ -208,7 +208,7 @@ public:
 
     void retranslateUi(QDialog *Registration)
     {
-        Registration->setWindowTitle(QCoreApplication::translate("Registration", "Dialog", nullptr));
+        Registration->setWindowTitle(QCoreApplication::translate("Registration", "\320\241\320\276\320\267\320\264\320\260\320\275\320\270\320\265 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
         passwordMatchLabel->setText(QString());
         confirmPasswordLineEdit->setPlaceholderText(QCoreApplication::translate("Registration", "\320\237\320\276\320\262\321\202\320\276\321\200\320\270\321\202\320\265 \320\277\320\260\321\200\320\276\320\273\321\214", nullptr));
         passwordLabel->setText(QCoreApplication::translate("Registration", "\320\237\320\260\321\200\320\276\320\273\321\214:", nullptr));

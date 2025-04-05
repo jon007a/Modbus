@@ -21,7 +21,7 @@
 #include "statistictwo.h"
 #include <QDesktopServices>
 #include "registration.h"
-
+#include "errorwindow.h"
 #include <QFileDialog> //wordotchet
 #include <QDateTime>
 
@@ -36,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , modbusDevice(nullptr) // инициализация клиента как nullptr
     , userSelected(false)
-    , adminWindow(nullptr)
     , isAdminUser(false)
 
 {
@@ -93,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     statistic = new Statistic(this);
-    setupAdminMenu();
+
 
 
 
@@ -189,8 +188,8 @@ void MainWindow::requestDataFromModbus()
 {
     if (!modbusDevice || !userSelected) return;
 
-    // Читаем 5 регистров начиная с 0
-    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 5);
+    // Читаем 6 регистров начиная с 0
+    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 6);
     if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {
         connect(reply, &QModbusReply::finished, this, &MainWindow::onModbusReadReady);
     } else {
@@ -548,9 +547,11 @@ void MainWindow::disableControls()
     ui->disconnectButton->setEnabled(false);
     ui->menustatistictwo->setEnabled(false);
     ui->menuwarnings->setEnabled(false);
-    if (adminAction) {
-        adminAction->setEnabled(false);
-    }
+    ui->menuAdmin->setEnabled(false);
+
+
+
+
 
 
     // Показываем сообщение пользователю
@@ -573,9 +574,8 @@ void MainWindow::enableControls()
     ui->disconnectButton->setEnabled(true);
     ui->menustatistictwo->setEnabled(true);
     ui->menuwarnings->setEnabled(true);
-    if (adminAction) {
-        adminAction->setEnabled(isAdminUser);
-    }
+    ui->menuAdmin->setEnabled(true);
+
 
     statusBar()->showMessage("Пользователь выбран: " + currentUser, 5000);
 }
@@ -987,6 +987,78 @@ void MainWindow::on_actionRegister_triggered()
     Registration registrationDialog(this);
     registrationDialog.exec();
 }
+void MainWindow::on_actionadminpanel_triggered()
+{
+    if (!isAdminUser) {
+
+        QMessageBox::warning(this, "Ошибка",
+
+                             "Доступ запрещен. Необходимы права администратора.");
+
+        return;
+
+    }
+    Admin adminDialog(this);
+    adminDialog.exec();
+
+}
+
+
+
+
+
+
+
+void MainWindow::on_actionWarnings_triggered()
+{
+    int userId = currentUserId; // Получите ID текущего пользователя
+    ErrorWindow errorWindow(userId, this); // Передаем ID пользователя и родительский виджет
+    errorWindow.exec(); // Открываем окно
+
+}
+// Чтение статуса ошибок с частотника
+void MainWindow::readErrorStatus() {
+    if (!modbusDevice) {
+        qDebug() << "Modbus device is not initialized!";
+        return;
+    }
+// Чтение регистров ошибок
+    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 16380, 3); // Чтение 3 регистров начиная с 16380
+    if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {
+        connect(reply, &QModbusReply::finished, this, [this, reply]() {
+            if (reply->error() == QModbusDevice::NoError) {
+                // Обработка полученных данных
+                const QModbusDataUnit &dataUnit = reply->result();
+                for (int i = 0; i < dataUnit.valueCount(); ++i) {
+                    quint16 errorCode = dataUnit.value(i);
+                    // Сохранение ошибки в базу данных
+                    saveErrorToDatabase(errorCode);
+                }
+            } else {
+                qDebug() << "Error reading error status:" << reply->errorString();
+                qDebug() << "Modbus Exception Code:" << reply->error();
+            }
+            reply->deleteLater();
+        });
+        qDebug() << "Error sending read request:" << reply->errorString();
+    }
+}
+
+void MainWindow::setCurrentUserr(int userId) {
+    currentUserId = userId; // Установите ID текущего пользователя
+}
+
+void MainWindow::saveErrorToDatabase(int errorCode) {
+    // Сохранение ошибки в базу данных
+    int userId = currentUserId;
+    QString errorDescription = "Описание ошибки"; // Замените на реальное описание ошибки
+    ErrorWindow *errorWindow = new ErrorWindow(currentUserId,this); // Создайте экземпляр ErrorWindow
+    errorWindow->saveErrorToDatabase(userId, errorCode, errorDescription); // Сохраните ошибку
+
+    // Уведомление пользователя
+    QMessageBox::warning(this, "Ошибка", QString("Произошла ошибка: %1").arg(errorCode));
+}
+
 
 
 
@@ -1046,54 +1118,10 @@ void MainWindow::on_actionExportReport_triggered()
 
 
 }
-void MainWindow::openAdminPanel()
-
-{
-
-    if (!isAdminUser) {
-
-        QMessageBox::warning(this, "Ошибка",
-
-                             "Доступ запрещен. Необходимы права администратора.");
-
-        return;
-
-    }
 
 
 
-    if (!adminWindow) {
 
-        adminWindow = new Admin(this);
-
-    }
-
-    adminWindow->show();
-
-}
-
-
-void MainWindow::setupAdminMenu()
-
-{
-
-    // Создаем действие для админ-панели
-
-    QAction *adminAction = new QAction("Панель администратора", this);
-
-
-
-    // Добавляем действие в меню
-
-    ui->menubar->addAction(adminAction);
-
-
-
-    // Соединяем сигнал с нашим слотом
-
-    connect(adminAction, &QAction::triggered, this, &MainWindow::openAdminPanel);
-
-}
 
 
 
@@ -1133,3 +1161,12 @@ void MainWindow::onManualSpeedEntered()
         });
     }
 }
+
+
+
+
+
+
+
+
+

@@ -11,7 +11,7 @@ Statistic::Statistic(QWidget *parent) :
     ui(new Ui::Statistic)
 {
     ui->setupUi(this);
-
+    setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/selection.png"));
     connect(ui->selectUserButton, &QPushButton::clicked, this, &Statistic::selectUser);
 
     // Инициализация базы данных и загрузка пользователей

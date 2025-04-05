@@ -84,9 +84,14 @@ static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringD
     "on_disconnectButton_clicked",
     "on_actionRegister_triggered",
     "on_actionExportReport_triggered",
-    "openAdminPanel",
-    "setupAdminMenu",
-    "onManualSpeedEntered"
+    "onManualSpeedEntered",
+    "on_actionadminpanel_triggered",
+    "on_actionWarnings_triggered",
+    "saveErrorToDatabase",
+    "errorCode",
+    "readErrorStatus",
+    "setCurrentUserr",
+    "userId"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -98,7 +103,7 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      32,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -106,37 +111,40 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
        7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,  188,    2, 0x06,    1 /* Public */,
-       4,    1,  191,    2, 0x06,    3 /* Public */,
-       6,    1,  194,    2, 0x06,    5 /* Public */,
-       8,    1,  197,    2, 0x06,    7 /* Public */,
-      10,    1,  200,    2, 0x06,    9 /* Public */,
-      12,    0,  203,    2, 0x06,   11 /* Public */,
-      13,    0,  204,    2, 0x06,   12 /* Public */,
+       1,    1,  206,    2, 0x06,    1 /* Public */,
+       4,    1,  209,    2, 0x06,    3 /* Public */,
+       6,    1,  212,    2, 0x06,    5 /* Public */,
+       8,    1,  215,    2, 0x06,    7 /* Public */,
+      10,    1,  218,    2, 0x06,    9 /* Public */,
+      12,    0,  221,    2, 0x06,   11 /* Public */,
+      13,    0,  222,    2, 0x06,   12 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      14,    0,  205,    2, 0x08,   13 /* Private */,
-      15,    8,  206,    2, 0x08,   14 /* Private */,
-      24,    0,  223,    2, 0x08,   23 /* Private */,
-      25,    1,  224,    2, 0x08,   24 /* Private */,
-      27,    1,  227,    2, 0x08,   26 /* Private */,
-      28,    0,  230,    2, 0x08,   28 /* Private */,
-      29,    0,  231,    2, 0x08,   29 /* Private */,
-      30,    0,  232,    2, 0x08,   30 /* Private */,
-      31,    0,  233,    2, 0x08,   31 /* Private */,
-      32,    0,  234,    2, 0x08,   32 /* Private */,
-      33,    1,  235,    2, 0x08,   33 /* Private */,
-      35,    0,  238,    2, 0x08,   35 /* Private */,
-      36,    0,  239,    2, 0x08,   36 /* Private */,
-      37,    0,  240,    2, 0x08,   37 /* Private */,
-      38,    0,  241,    2, 0x08,   38 /* Private */,
-      39,    1,  242,    2, 0x08,   39 /* Private */,
-      42,    0,  245,    2, 0x08,   41 /* Private */,
-      43,    0,  246,    2, 0x08,   42 /* Private */,
-      44,    0,  247,    2, 0x08,   43 /* Private */,
-      45,    0,  248,    2, 0x08,   44 /* Private */,
-      46,    0,  249,    2, 0x08,   45 /* Private */,
-      47,    0,  250,    2, 0x08,   46 /* Private */,
+      14,    0,  223,    2, 0x08,   13 /* Private */,
+      15,    8,  224,    2, 0x08,   14 /* Private */,
+      24,    0,  241,    2, 0x08,   23 /* Private */,
+      25,    1,  242,    2, 0x08,   24 /* Private */,
+      27,    1,  245,    2, 0x08,   26 /* Private */,
+      28,    0,  248,    2, 0x08,   28 /* Private */,
+      29,    0,  249,    2, 0x08,   29 /* Private */,
+      30,    0,  250,    2, 0x08,   30 /* Private */,
+      31,    0,  251,    2, 0x08,   31 /* Private */,
+      32,    0,  252,    2, 0x08,   32 /* Private */,
+      33,    1,  253,    2, 0x08,   33 /* Private */,
+      35,    0,  256,    2, 0x08,   35 /* Private */,
+      36,    0,  257,    2, 0x08,   36 /* Private */,
+      37,    0,  258,    2, 0x08,   37 /* Private */,
+      38,    0,  259,    2, 0x08,   38 /* Private */,
+      39,    1,  260,    2, 0x08,   39 /* Private */,
+      42,    0,  263,    2, 0x08,   41 /* Private */,
+      43,    0,  264,    2, 0x08,   42 /* Private */,
+      44,    0,  265,    2, 0x08,   43 /* Private */,
+      45,    0,  266,    2, 0x08,   44 /* Private */,
+      46,    0,  267,    2, 0x08,   45 /* Private */,
+      47,    0,  268,    2, 0x08,   46 /* Private */,
+      48,    1,  269,    2, 0x08,   47 /* Private */,
+      50,    0,  272,    2, 0x08,   49 /* Private */,
+      51,    1,  273,    2, 0x08,   50 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QReal,    3,
@@ -170,6 +178,9 @@ Q_CONSTINIT static const uint qt_meta_data_ZN10MainWindowE[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   49,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   52,
 
        0        // eod
 };
@@ -252,12 +263,20 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_actionExportReport_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'openAdminPanel'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'setupAdminMenu'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onManualSpeedEntered'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_actionadminpanel_triggered'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_actionWarnings_triggered'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'saveErrorToDatabase'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
+        // method 'readErrorStatus'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'setCurrentUserr'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>
     >,
     nullptr
 } };
@@ -294,9 +313,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 23: _t->on_disconnectButton_clicked(); break;
         case 24: _t->on_actionRegister_triggered(); break;
         case 25: _t->on_actionExportReport_triggered(); break;
-        case 26: _t->openAdminPanel(); break;
-        case 27: _t->setupAdminMenu(); break;
-        case 28: _t->onManualSpeedEntered(); break;
+        case 26: _t->onManualSpeedEntered(); break;
+        case 27: _t->on_actionadminpanel_triggered(); break;
+        case 28: _t->on_actionWarnings_triggered(); break;
+        case 29: _t->saveErrorToDatabase((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 30: _t->readErrorStatus(); break;
+        case 31: _t->setCurrentUserr((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         default: ;
         }
     }
@@ -373,14 +395,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 32)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 32;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 32)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 29;
+        _id -= 32;
     }
     return _id;
 }

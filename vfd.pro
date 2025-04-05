@@ -19,6 +19,7 @@ CONFIG += c++17
 SOURCES += \
     admin.cpp \
     connectionsettings.cpp \
+    errorwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp \
@@ -30,6 +31,8 @@ SOURCES += \
 HEADERS += \
     admin.h \
     connectionsettings.h \
+    errorwindow.h \
+    errorwindow.h \
     mainwindow.h \
     qcustomplot.h \
     registration.h \
@@ -40,6 +43,7 @@ HEADERS += \
 FORMS += \
     admin.ui \
     connectionsettings.ui \
+    errorwindow.ui \
     mainwindow.ui \
     registration.ui \
     statistic.ui \
