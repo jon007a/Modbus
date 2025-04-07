@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlDatabase>
+#include <QLineEdit>
 
 namespace Ui {
 class Admin;
@@ -29,6 +30,14 @@ private:
     Ui::Admin *ui;
     QSqlDatabase db;
     bool isEditMode;
+
+    QLineEdit *fullNameEdit;
+
+    QLineEdit *positionEdit;
+
+    QLineEdit *otdelEdit;
+
+    QLineEdit *organizationEdit;
     
     void initDatabase();
     void updateUserData(const QString &username);
@@ -36,6 +45,7 @@ private:
     void setFormEnabled(bool enabled);
     QString hashPassword(const QString &password);
     bool validateInput();
+    void saveEmployeeData();
 };
 
 #endif // ADMIN_H

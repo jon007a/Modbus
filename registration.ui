@@ -30,7 +30,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>626</width>
+     <width>630</width>
      <height>349</height>
     </rect>
    </property>
@@ -206,17 +206,32 @@ QLineEdit:disabled {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    padding: 8px 16px;
-    background-color: #2D2D2D;
+    text-align: center;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
     border: none;
-    border-radius: 4px;
+    min-height: 20px;
+    max-width: 150px;
 }
 
 QPushButton:hover {
-    background-color: #3E3E3E;
+    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
+                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+}
+
+QPushButton:pressed {
+    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
+                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
 }
 
 QPushButton:disabled {
+    background: #9E9E9E;
+    color: #E0E0E0;
+}QPushButton:disabled {
     background-color: #1E1E1E;
     color: #666666;
 }QPushButton {

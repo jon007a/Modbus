@@ -159,7 +159,7 @@ QProgressBar::chunk {
     padding: 5px 10px;
     font-weight: bold;
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #3A3A3A, stop:0.5 #606060, stop:1 #3A3A3A);
     border: none;
     min-height: 25px;
     max-width: 150px;
@@ -167,12 +167,12 @@ QProgressBar::chunk {
 
 QPushButton:hover {
     background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #2A2A2A, stop:0.5 #404040, stop:1 #2A2A2A) /* Темнее при наведении */
 }
 
 QPushButton:pressed {
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+                              stop:0 #1F1F1F, stop:0.5 #303030, stop:1 #1F1F1F);
 }
 
 QPushButton:disabled {
@@ -201,7 +201,7 @@ QPushButton:disabled {
     padding: 5px 10px;
     font-weight: bold;
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #3A3A3A, stop:0.5 #606060, stop:1 #3A3A3A);
     border: none;
     min-height: 25px;
     max-width: 150px;
@@ -209,12 +209,12 @@ QPushButton:disabled {
 
 QPushButton:hover {
     background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #2A2A2A, stop:0.5 #404040, stop:1 #2A2A2A) /* Темнее при наведении */
 }
 
 QPushButton:pressed {
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+                              stop:0 #1F1F1F, stop:0.5 #303030, stop:1 #1F1F1F);
 }
 
 QPushButton:disabled {
@@ -243,7 +243,7 @@ QPushButton:disabled {
     padding: 5px 10px;
     font-weight: bold;
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #3A3A3A, stop:0.5 #606060, stop:1 #3A3A3A);
     border: none;
     min-height: 25px;
     max-width: 150px;
@@ -251,12 +251,12 @@ QPushButton:disabled {
 
 QPushButton:hover {
     background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #2A2A2A, stop:0.5 #404040, stop:1 #2A2A2A) /* Темнее при наведении */
 }
 
 QPushButton:pressed {
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+                              stop:0 #1F1F1F, stop:0.5 #303030, stop:1 #1F1F1F);
 }
 
 QPushButton:disabled {
@@ -385,8 +385,8 @@ QProgressBar::chunk {
    <widget class="QLineEdit" name="speedInput">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>316</y>
+      <x>40</x>
+      <y>310</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -416,10 +416,10 @@ QLineEdit:disabled {
    <widget class="QPushButton" name="setSpeedButton">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>309</y>
+      <x>170</x>
+      <y>310</y>
       <width>111</width>
-      <height>41</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -430,20 +430,20 @@ QLineEdit:disabled {
     padding: 5px 10px;
     font-weight: bold;
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #3A3A3A, stop:0.5 #606060, stop:1 #3A3A3A);
     border: none;
-    min-height: 25px;
+    min-height: 20px;
     max-width: 150px;
 }
 
 QPushButton:hover {
     background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, 
-                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);
+                              stop:0 #2A2A2A, stop:0.5 #404040, stop:1 #2A2A2A) /* Темнее при наведении */
 }
 
 QPushButton:pressed {
     background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, 
-                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);
+                              stop:0 #1F1F1F, stop:0.5 #303030, stop:1 #1F1F1F);
 }
 
 QPushButton:disabled {

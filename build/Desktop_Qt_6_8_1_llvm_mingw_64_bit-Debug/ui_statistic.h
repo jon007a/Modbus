@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -26,7 +27,9 @@ class Ui_Statistic
 public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
+    QLabel *label;
     QComboBox *userComboBox;
+    QLabel *label_2;
     QLineEdit *passwordLineEdit;
     QPushButton *selectUserButton;
     QStatusBar *statusbar;
@@ -35,13 +38,18 @@ public:
     {
         if (Statistic->objectName().isEmpty())
             Statistic->setObjectName("Statistic");
-        Statistic->resize(400, 300);
-        Statistic->setMinimumSize(QSize(400, 300));
-        Statistic->setMaximumSize(QSize(402, 300));
+        Statistic->resize(200, 216);
+        Statistic->setMinimumSize(QSize(200, 216));
+        Statistic->setMaximumSize(QSize(200, 216));
         centralwidget = new QWidget(Statistic);
         centralwidget->setObjectName("centralwidget");
         verticalLayout = new QVBoxLayout(centralwidget);
         verticalLayout->setObjectName("verticalLayout");
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+
+        verticalLayout->addWidget(label);
+
         userComboBox = new QComboBox(centralwidget);
         userComboBox->setObjectName("userComboBox");
         userComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
@@ -50,7 +58,7 @@ public:
 "    border: 1px solid #C2C2C2;\n"
 "    border-radius: 6px;\n"
 "    padding: 6px 10px;\n"
-"    min-height: 24px;\n"
+"    min-height: 20px;\n"
 "    font-size: 13px;\n"
 "}\n"
 "\n"
@@ -80,9 +88,14 @@ public:
 
         verticalLayout->addWidget(userComboBox);
 
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName("label_2");
+
+        verticalLayout->addWidget(label_2);
+
         passwordLineEdit = new QLineEdit(centralwidget);
         passwordLineEdit->setObjectName("passwordLineEdit");
-        passwordLineEdit->setMinimumSize(QSize(380, 32));
+        passwordLineEdit->setMinimumSize(QSize(20, 32));
         passwordLineEdit->setMaximumSize(QSize(380, 30));
         passwordLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #F5F5F5;\n"
@@ -113,7 +126,7 @@ public:
 "    padding: 5px 10px;\n"
 "    font-weight: bold;\n"
 "    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
-"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"                              stop:0 #3A3A3A, stop:0.5 #606060, stop:1 #3A3A3A);\n"
 "    border: none;\n"
 "    min-height: 25px;\n"
 "    max-width: 150px;\n"
@@ -121,12 +134,12 @@ public:
 "\n"
 "QPushButton:hover {\n"
 "    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
-"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"                              stop:0 #2A2A2A, stop:0.5 #404040, stop:1 #2A2A2A) /* \320\242\320\265\320\274\320\275\320\265\320\265 \320\277\321\200\320\270 \320\275\320\260\320\262\320\265\320\264\320\265\320\275\320\270\320\270 */\n"
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
 "    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
-"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
+"                              stop:0 #1F1F1F, stop:0.5 #303030, stop:1 #1F1F1F);\n"
 "}\n"
 "\n"
 "QPushButton:disabled {\n"
@@ -149,6 +162,8 @@ public:
     void retranslateUi(QMainWindow *Statistic)
     {
         Statistic->setWindowTitle(QCoreApplication::translate("Statistic", "\320\222\321\213\320\261\320\276\321\200 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
+        label->setText(QCoreApplication::translate("Statistic", "\320\222\321\213\320\261\320\265\321\200\320\270\321\202\320\265 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
+        label_2->setText(QCoreApplication::translate("Statistic", "\320\222\320\262\320\265\320\264\320\270\321\202\320\265 \320\277\320\260\321\200\320\276\320\273\321\214", nullptr));
         selectUserButton->setText(QCoreApplication::translate("Statistic", "\320\222\321\213\320\261\321\200\320\260\321\202\321\214 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
     } // retranslateUi
 

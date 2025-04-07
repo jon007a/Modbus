@@ -24,7 +24,29 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="userComboBox"/>
+      <widget class="QComboBox" name="userComboBox">
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри выпадающего списка */
+    min-height: 20px; /* Минимальная высота выпадающего списка */
+}
+
+QComboBox:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QComboBox QAbstractItemView {
+    background-color: #F5F5F5; /* Цвет фона выпадающего списка */
+    color: #333333; /* Цвет текста в выпадающем списке */
+    selection-background-color: #A0A0A0; /* Цвет фона выбранного элемента */
+    selection-color: #FFFFFF; /* Цвет текста выбранного элемента */
+}</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -42,7 +64,27 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="loginEdit"/>
+       <widget class="QLineEdit" name="loginEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="passwordLabel">
@@ -53,50 +95,203 @@
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="passwordEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
         <property name="echoMode">
          <enum>QLineEdit::EchoMode::Password</enum>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="activationLabel">
         <property name="text">
          <string>Код активации:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="activationEdit"/>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="activationEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
+       </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="fullNameLabel">
         <property name="text">
          <string>ФИО:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="fullNameEdit"/>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="fullNameEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
+       </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="positionLabel">
         <property name="text">
          <string>Должность:</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="positionEdit"/>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="roleLabel">
-        <property name="text">
-         <string>Роль:</string>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="positionEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Отдел</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLineEdit" name="otdelEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Организация</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="organizationEdit">
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #F5F5F5;
+    color: #333333;
+    border: 1px solid #BBBBBB;
+    border-radius: 5px;
+    padding: 5px;
+    min-height: 20px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #707070;
+}
+
+QLineEdit:disabled {
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+}</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
        <widget class="QComboBox" name="roleComboBox">
+        <property name="styleSheet">
+         <string notr="true">QComboBox {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри выпадающего списка */
+    min-height: 20px; /* Минимальная высота выпадающего списка */
+}
+
+QComboBox:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QComboBox QAbstractItemView {
+    background-color: #F5F5F5; /* Цвет фона выпадающего списка */
+    color: #333333; /* Цвет текста в выпадающем списке */
+    selection-background-color: #A0A0A0; /* Цвет фона выбранного элемента */
+    selection-color: #FFFFFF; /* Цвет текста выбранного элемента */
+}</string>
+        </property>
         <item>
          <property name="text">
           <string>admin</string>
@@ -114,6 +309,13 @@
         </item>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="roleLabel">
+        <property name="text">
+         <string>Роль:</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -121,6 +323,28 @@
     <layout class="QHBoxLayout" name="buttonLayout">
      <item>
       <widget class="QPushButton" name="addButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри кнопки */
+    min-height: 20px; /* Минимальная высота кнопки */
+}
+
+QPushButton:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QPushButton:hover {
+    background-color: #E0E0E0; /* Цвет фона при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #D0D0D0; /* Цвет фона при нажатии */
+}</string>
+       </property>
        <property name="text">
         <string>Добавить</string>
        </property>
@@ -128,6 +352,28 @@
      </item>
      <item>
       <widget class="QPushButton" name="editButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри кнопки */
+    min-height: 20px; /* Минимальная высота кнопки */
+}
+
+QPushButton:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QPushButton:hover {
+    background-color: #E0E0E0; /* Цвет фона при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #D0D0D0; /* Цвет фона при нажатии */
+}</string>
+       </property>
        <property name="text">
         <string>Редактировать</string>
        </property>
@@ -135,6 +381,28 @@
      </item>
      <item>
       <widget class="QPushButton" name="deleteButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри кнопки */
+    min-height: 20px; /* Минимальная высота кнопки */
+}
+
+QPushButton:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QPushButton:hover {
+    background-color: #E0E0E0; /* Цвет фона при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #D0D0D0; /* Цвет фона при нажатии */
+}</string>
+       </property>
        <property name="text">
         <string>Удалить</string>
        </property>
@@ -154,7 +422,36 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="save2Button">
+       <property name="text">
+        <string>Сохранить фио</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="saveButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри кнопки */
+    min-height: 20px; /* Минимальная высота кнопки */
+}
+
+QPushButton:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QPushButton:hover {
+    background-color: #E0E0E0; /* Цвет фона при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #D0D0D0; /* Цвет фона при нажатии */
+}</string>
+       </property>
        <property name="text">
         <string>Сохранить</string>
        </property>
@@ -162,6 +459,28 @@
      </item>
      <item>
       <widget class="QPushButton" name="cancelButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #F5F5F5; /* Цвет фона */
+    color: #333333; /* Цвет текста */
+    border: 1px solid #BBBBBB; /* Цвет границы */
+    border-radius: 5px; /* Закругление углов */
+    padding: 5px; /* Отступы внутри кнопки */
+    min-height: 20px; /* Минимальная высота кнопки */
+}
+
+QPushButton:focus {
+    border: 1px solid #707070; /* Цвет границы при фокусе */
+}
+
+QPushButton:hover {
+    background-color: #E0E0E0; /* Цвет фона при наведении */
+}
+
+QPushButton:pressed {
+    background-color: #D0D0D0; /* Цвет фона при нажатии */
+}</string>
+       </property>
        <property name="text">
         <string>Отмена</string>
        </property>

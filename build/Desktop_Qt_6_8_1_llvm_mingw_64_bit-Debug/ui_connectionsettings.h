@@ -35,12 +35,12 @@ public:
     {
         if (ConnectionSettings->objectName().isEmpty())
             ConnectionSettings->setObjectName("ConnectionSettings");
-        ConnectionSettings->resize(270, 440);
-        ConnectionSettings->setMinimumSize(QSize(270, 440));
-        ConnectionSettings->setMaximumSize(QSize(270, 440));
+        ConnectionSettings->resize(270, 220);
+        ConnectionSettings->setMinimumSize(QSize(270, 220));
+        ConnectionSettings->setMaximumSize(QSize(270, 220));
         connectionTypeComboBox = new QComboBox(ConnectionSettings);
         connectionTypeComboBox->setObjectName("connectionTypeComboBox");
-        connectionTypeComboBox->setGeometry(QRect(30, 60, 72, 31));
+        connectionTypeComboBox->setGeometry(QRect(10, 10, 71, 31));
         connectionTypeComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -78,7 +78,7 @@ public:
 ""));
         comPortSpinBox = new QSpinBox(ConnectionSettings);
         comPortSpinBox->setObjectName("comPortSpinBox");
-        comPortSpinBox->setGeometry(QRect(30, 104, 91, 31));
+        comPortSpinBox->setGeometry(QRect(90, 10, 91, 34));
         comPortSpinBox->setStyleSheet(QString::fromUtf8("QSpinBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\201\320\262\320\265\321\202\320\273\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: #212121; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -118,7 +118,7 @@ public:
 ""));
         ipAddressLineEdit = new QLineEdit(ConnectionSettings);
         ipAddressLineEdit->setObjectName("ipAddressLineEdit");
-        ipAddressLineEdit->setGeometry(QRect(110, 60, 151, 31));
+        ipAddressLineEdit->setGeometry(QRect(90, 10, 171, 31));
         ipAddressLineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -140,7 +140,7 @@ public:
 ""));
         applyButton = new QPushButton(ConnectionSettings);
         applyButton->setObjectName("applyButton");
-        applyButton->setGeometry(QRect(100, 390, 161, 41));
+        applyButton->setGeometry(QRect(110, 160, 151, 41));
         applyButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -163,7 +163,7 @@ public:
 ""));
         dataBitsComboBox = new QComboBox(ConnectionSettings);
         dataBitsComboBox->setObjectName("dataBitsComboBox");
-        dataBitsComboBox->setGeometry(QRect(30, 190, 91, 31));
+        dataBitsComboBox->setGeometry(QRect(10, 90, 91, 31));
         dataBitsComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -201,7 +201,7 @@ public:
 ""));
         stopBitsComboBox = new QComboBox(ConnectionSettings);
         stopBitsComboBox->setObjectName("stopBitsComboBox");
-        stopBitsComboBox->setGeometry(QRect(30, 230, 91, 31));
+        stopBitsComboBox->setGeometry(QRect(10, 130, 91, 31));
         stopBitsComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -239,7 +239,7 @@ public:
 ""));
         baudRateComboBox = new QComboBox(ConnectionSettings);
         baudRateComboBox->setObjectName("baudRateComboBox");
-        baudRateComboBox->setGeometry(QRect(30, 150, 91, 31));
+        baudRateComboBox->setGeometry(QRect(10, 50, 91, 31));
         baudRateComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"
@@ -277,7 +277,7 @@ public:
 ""));
         parityComboBox = new QComboBox(ConnectionSettings);
         parityComboBox->setObjectName("parityComboBox");
-        parityComboBox->setGeometry(QRect(30, 270, 91, 31));
+        parityComboBox->setGeometry(QRect(10, 170, 91, 31));
         parityComboBox->setStyleSheet(QString::fromUtf8("QComboBox {\n"
 "    background-color: #757575; /* \320\236\321\201\320\275\320\276\320\262\320\275\320\276\320\271 \321\202\320\265\320\274\320\275\320\276-\321\201\320\265\321\200\321\213\320\271 \321\204\320\276\320\275 */\n"
 "    color: white; /* \320\246\320\262\320\265\321\202 \321\202\320\265\320\272\321\201\321\202\320\260 */\n"

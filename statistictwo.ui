@@ -92,7 +92,7 @@ QPushButton:checked:pressed {
 QPushButton:disabled {
     background: #9E9E9E;
     color: #A0FFA0;  /* Бледно-зеленый при отключении в невыбранном состоянии */
-    text-shadow: none; /* Убираем тень для отключенного состояния */
+   
 }
 
 QPushButton:checked:disabled {

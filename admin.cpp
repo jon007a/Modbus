@@ -32,10 +32,22 @@ Admin::Admin(QWidget *parent)
             this, &Admin::onEditClicked);
     connect(ui->deleteButton, &QPushButton::clicked, 
             this, &Admin::onDeleteClicked);
-    connect(ui->saveButton, &QPushButton::clicked, 
+    connect(ui->saveButton, &QPushButton::clicked,
             this, &Admin::onSaveClicked);
     connect(ui->cancelButton, &QPushButton::clicked, 
             this, &Admin::onCancelClicked);
+    connect(ui->save2Button, &QPushButton::clicked,
+            this, &Admin::saveEmployeeData);
+
+    // Инициализация новых полей
+
+    fullNameEdit = ui->fullNameEdit;
+
+    positionEdit = ui->positionEdit;
+
+    otdelEdit = ui->otdelEdit;
+
+    organizationEdit = ui->organizationEdit;
 }
 
 Admin::~Admin()
@@ -238,4 +250,47 @@ bool Admin::validateInput()
     }
     
     return true;
+}
+
+void Admin::saveEmployeeData() {
+
+    QString fullName = fullNameEdit->text();
+
+    QString position = positionEdit->text();
+
+    QString otdel = otdelEdit->text();
+
+    QString organization = organizationEdit->text();
+
+
+
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO Employees (fullName, position, otdel, organization) VALUES (:fullName, :position, :otdel, :organization)");
+
+    query.bindValue(":fullName", fullName);
+
+    query.bindValue(":position", position);
+
+    query.bindValue(":otdel", otdel);
+
+    query.bindValue(":organization", organization);
+
+
+
+    // Выполнение запроса
+    if (!query.exec()) {
+        qDebug() << "Ошибка при сохранении данных о сотруднике:" << query.lastError().text();
+        db.rollback(); // Откат транзакции в случае ошибки
+        QMessageBox::critical(this, "Ошибка", "Не удалось сохранить данные: " + query.lastError().text());
+        return; // Выход из метода
+    }
+
+    // Если сохранение прошло успешно, подтверждаем транзакцию
+    if (!db.commit()) {
+        qDebug() << "Ошибка при подтверждении транзакции:" << db.lastError().text();
+        QMessageBox::critical(this, "Ошибка", "Не удалось подтвердить транзакцию: " + db.lastError().text());
+    } else {
+        QMessageBox::information(this, "Успех", "Данные о сотруднике успешно сохранены.");
+    }
 }

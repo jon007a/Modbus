@@ -46,7 +46,7 @@ public:
         Registration->setMaximumSize(QSize(650, 370));
         gridLayoutWidget = new QWidget(Registration);
         gridLayoutWidget->setObjectName("gridLayoutWidget");
-        gridLayoutWidget->setGeometry(QRect(10, 10, 626, 349));
+        gridLayoutWidget->setGeometry(QRect(10, 10, 630, 349));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName("gridLayout");
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -178,23 +178,39 @@ public:
         registerButton->setObjectName("registerButton");
         registerButton->setEnabled(false);
         registerButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"    padding: 8px 16px;\n"
-"    background-color: #2D2D2D;\n"
+"    text-align: center;\n"
+"    color: white;\n"
+"    border-radius: 8px;\n"
+"    padding: 5px 10px;\n"
+"    font-weight: bold;\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
 "    border: none;\n"
-"    border-radius: 4px;\n"
+"    min-height: 20px;\n"
+"    max-width: 150px;\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
-"    background-color: #3E3E3E;\n"
+"    background: qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, \n"
+"                              stop:0 #4A4A4A, stop:0.5 #707070, stop:1 #4A4A4A);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, \n"
+"                              stop:0 #303030, stop:0.5 #505050, stop:1 #303030);\n"
 "}\n"
 "\n"
 "QPushButton:disabled {\n"
+"    background: #9E9E9E;\n"
+"    color: #E0E0E0;\n"
+"}QPushButton:disabled {\n"
 "    background-color: #1E1E1E;\n"
 "    color: #666666;\n"
 "}QPushButton {\n"
 "    padding: 8px 16px;\n"
 "    background-color: #2D2D2D;\n"
-"    border: none;\n"
+""
+                        "    border: none;\n"
 "    border-radius: 4px;\n"
 "}"));
 
