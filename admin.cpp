@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QCryptographicHash>
 #include <QDebug>
+#include "registration.h"
 
 Admin::Admin(QWidget *parent)
     : QDialog(parent)
@@ -36,8 +37,10 @@ Admin::Admin(QWidget *parent)
             this, &Admin::onSaveClicked);
     connect(ui->cancelButton, &QPushButton::clicked, 
             this, &Admin::onCancelClicked);
-    connect(ui->save2Button, &QPushButton::clicked,
+    connect(ui->saveButton, &QPushButton::clicked,
             this, &Admin::saveEmployeeData);
+    Registration *registrationDialog = new Registration(this);
+    connect(registrationDialog, &Registration::userRegistered, this, &Admin::loadUsers);
 
     // Инициализация новых полей
 
@@ -93,23 +96,51 @@ void Admin::loadUsers()
 void Admin::onUserSelected(const QString &username)
 {
     if (username.isEmpty()) return;
-    
-    QSqlQuery query(db);
-    query.prepare("SELECT username, activation_code, role FROM users WHERE username = :username");
-    query.bindValue(":username", username);
-    
-    if (query.exec() && query.next()) {
-        ui->loginEdit->setText(query.value(0).toString());
-        ui->activationEdit->setText(query.value(1).toString());
-        
-        QString role = query.value(2).toString();
+
+    // Сначала получаем данные из таблицы users
+    QSqlQuery userQuery(db);
+    userQuery.prepare("SELECT username, activation_code, role FROM users WHERE username = :username");
+    userQuery.bindValue(":username", username);
+
+    if (!userQuery.exec()) {
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить данные пользователя: " + userQuery.lastError().text());
+        return;
+    }
+
+    if (userQuery.next()) {
+        ui->loginEdit->setText(userQuery.value(0).toString());
+        ui->activationEdit->setText(userQuery.value(1).toString());
+
+        QString role = userQuery.value(2).toString();
         int index = ui->roleComboBox->findText(role, Qt::MatchFixedString);
         if (index >= 0) {
             ui->roleComboBox->setCurrentIndex(index);
         }
-        
-        ui->passwordEdit->clear();
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Пользователь не найден.");
+        return;
     }
+
+    // Теперь получаем данные из таблицы employees
+    QSqlQuery employeeQuery(db);
+    employeeQuery.prepare("SELECT fullname, position, otdel, organization FROM employees WHERE username = :username");
+    employeeQuery.bindValue(":username", username);
+
+    if (!employeeQuery.exec()) {
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить данные о сотруднике: " + employeeQuery.lastError().text());
+        return;
+    }
+
+    if (employeeQuery.next()) {
+        ui->positionEdit->setText(employeeQuery.value(1).toString());
+        ui->otdelEdit->setText(employeeQuery.value(2).toString());
+        ui->organizationEdit->setText(employeeQuery.value(3).toString());
+        ui->fullNameEdit->setText(employeeQuery.value(0).toString());
+    } else {
+        QMessageBox::warning(this, "Ошибка", "Данные о сотруднике не найдены.");
+    }
+
+    ui->passwordEdit->clear();
 }
 
 void Admin::onAddClicked()
@@ -143,6 +174,18 @@ void Admin::onDeleteClicked()
         QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes) {
         
         QSqlQuery query(db);
+
+        // Удаление строки из таблицы employees
+        query.prepare("DELETE FROM Employees WHERE username = :username");
+        query.bindValue(":username", username);
+
+        if (!query.exec()) {
+            QMessageBox::critical(this, "Ошибка",
+                                  "Не удалось удалить данные о сотруднике: " + query.lastError().text());
+            return; // Выход, если не удалось удалить данные о сотруднике
+        }
+
+        // Удаление пользователя из таблицы users
         query.prepare("DELETE FROM users WHERE username = :username");
         query.bindValue(":username", username);
         
@@ -187,7 +230,7 @@ void Admin::onSaveClicked()
     query.bindValue(":role", ui->roleComboBox->currentText().toLower());
     
     if (query.exec()) {
-        loadUsers();
+        //loadUsers();
         setFormEnabled(false);
         QMessageBox::information(this, "Успех", 
             isEditMode ? "Данные пользователя обновлены" : "Пользователь добавлен");
@@ -209,6 +252,11 @@ void Admin::clearForm()
     ui->passwordEdit->clear();
     ui->activationEdit->clear();
     ui->roleComboBox->setCurrentIndex(0);
+    //ui->roleComboBox->clear();
+    ui->fullNameEdit->clear();
+    ui->positionEdit->clear();
+    ui->otdelEdit->clear();
+    ui->organizationEdit->clear();
 }
 
 void Admin::setFormEnabled(bool enabled)
@@ -217,6 +265,10 @@ void Admin::setFormEnabled(bool enabled)
     ui->passwordEdit->setEnabled(enabled);
     ui->activationEdit->setEnabled(enabled);
     ui->roleComboBox->setEnabled(enabled);
+    ui->organizationEdit->setEnabled(enabled);
+    ui->otdelEdit->setEnabled(enabled);
+    ui->positionEdit->setEnabled(enabled);
+    ui->fullNameEdit->setEnabled(enabled);
     ui->saveButton->setEnabled(enabled);
     ui->cancelButton->setEnabled(enabled);
     
@@ -253,44 +305,43 @@ bool Admin::validateInput()
 }
 
 void Admin::saveEmployeeData() {
-
+    // Получаем данные из полей ввода
     QString fullName = fullNameEdit->text();
-
     QString position = positionEdit->text();
-
     QString otdel = otdelEdit->text();
-
     QString organization = organizationEdit->text();
+    QString username = ui->userComboBox->currentText(); // Получаем логин пользователя
 
-
-
-    QSqlQuery query;
-
-    query.prepare("INSERT INTO Employees (fullName, position, otdel, organization) VALUES (:fullName, :position, :otdel, :organization)");
-
-    query.bindValue(":fullName", fullName);
-
-    query.bindValue(":position", position);
-
-    query.bindValue(":otdel", otdel);
-
-    query.bindValue(":organization", organization);
-
-
-
-    // Выполнение запроса
-    if (!query.exec()) {
-        qDebug() << "Ошибка при сохранении данных о сотруднике:" << query.lastError().text();
-        db.rollback(); // Откат транзакции в случае ошибки
-        QMessageBox::critical(this, "Ошибка", "Не удалось сохранить данные: " + query.lastError().text());
-        return; // Выход из метода
+    // Проверка на пустые поля
+    if (fullName.isEmpty() || position.isEmpty() || otdel.isEmpty() || organization.isEmpty()) {
+        QMessageBox::warning(this, "Ошибка", "Пожалуйста, заполните все поля.");
+        return;
     }
 
-    // Если сохранение прошло успешно, подтверждаем транзакцию
-    if (!db.commit()) {
-        qDebug() << "Ошибка при подтверждении транзакции:" << db.lastError().text();
-        QMessageBox::critical(this, "Ошибка", "Не удалось подтвердить транзакцию: " + db.lastError().text());
+    QSqlQuery query(db);
+
+    // Подготовка SQL-запроса для вставки данных
+    if (isEditMode) {
+    query.prepare("UPDATE Employees SET fullName = :fullName, position = :position, otdel = :otdel, organization = :organization WHERE username = :username");
+    query.bindValue(":fullName", fullName);
+    query.bindValue(":position", position);
+    query.bindValue(":otdel", otdel);
+    query.bindValue(":organization", organization);
+    query.bindValue(":username", username);
     } else {
+        // Если добавляете нового сотрудника
+        query.prepare("INSERT INTO Employees (fullName, position, otdel, organization, username) VALUES (:fullName, :position, :otdel, :organization, :username)");
+        query.bindValue(":fullName", fullName);
+        query.bindValue(":position", position);
+        query.bindValue(":otdel", otdel);
+        query.bindValue(":organization", organization);
+        query.bindValue(":username", username);
+    }
+    // Выполнение запроса
+    if (query.exec()) {
         QMessageBox::information(this, "Успех", "Данные о сотруднике успешно сохранены.");
+    } else {
+        qDebug() << "Ошибка при сохранении данных о сотруднике:" << query.lastError().text();
+        QMessageBox::critical(this, "Ошибка", "Не удалось сохранить данные: " + query.lastError().text());
     }
 }

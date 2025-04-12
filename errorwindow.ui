@@ -213,6 +213,16 @@ QDateEdit::up-button:disabled, QDateEdit::down-button:disabled {
     background-color: #D9D9D9; /* Цвет фона кнопок при отключении */
 }</string>
    </property>
+   <property name="minimumDateTime">
+    <datetime>
+     <hour>0</hour>
+     <minute>0</minute>
+     <second>0</second>
+     <year>2025</year>
+     <month>9</month>
+     <day>14</day>
+    </datetime>
+   </property>
    <property name="maximumDate">
     <date>
      <year>2050</year>
@@ -222,13 +232,20 @@ QDateEdit::up-button:disabled, QDateEdit::down-button:disabled {
    </property>
    <property name="minimumDate">
     <date>
-     <year>2024</year>
+     <year>2025</year>
      <month>9</month>
      <day>14</day>
     </date>
    </property>
    <property name="calendarPopup">
     <bool>true</bool>
+   </property>
+   <property name="date">
+    <date>
+     <year>2025</year>
+     <month>9</month>
+     <day>14</day>
+    </date>
    </property>
   </widget>
   <widget class="QPushButton" name="exportButton">

@@ -189,7 +189,8 @@ void MainWindow::requestDataFromModbus()
     if (!modbusDevice || !userSelected) return;
 
     // Читаем 6 регистров начиная с 0
-    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 6);
+    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 0, 40000);
+
     if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {
         connect(reply, &QModbusReply::finished, this, &MainWindow::onModbusReadReady);
     } else {
@@ -465,6 +466,7 @@ void MainWindow::on_action_triggered()
                 this, &MainWindow::setCurrentUser);
     }
     statisticsWindow->show();
+    statisticsWindow->loadUsers();
 }
 
 
@@ -1016,14 +1018,16 @@ void MainWindow::on_actionWarnings_triggered()
     errorWindow.exec(); // Открываем окно
 
 }
-// Чтение статуса ошибок с частотника
+
+
 void MainWindow::readErrorStatus() {
     if (!modbusDevice) {
         qDebug() << "Modbus device is not initialized!";
         return;
     }
-// Чтение регистров ошибок
-    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 16380, 3); // Чтение 3 регистров начиная с 16380
+
+    // Чтение регистров ошибок
+    QModbusDataUnit readRequest(QModbusDataUnit::HoldingRegisters, 16380, 5); // Чтение 5 регистров начиная с 16380
     if (auto *reply = modbusDevice->sendReadRequest(readRequest, 1)) {
         connect(reply, &QModbusReply::finished, this, [this, reply]() {
             if (reply->error() == QModbusDevice::NoError) {
@@ -1040,23 +1044,50 @@ void MainWindow::readErrorStatus() {
             }
             reply->deleteLater();
         });
+    } else {
         qDebug() << "Error sending read request:" << reply->errorString();
     }
 }
 
-void MainWindow::setCurrentUserr(int userId) {
-    currentUserId = userId; // Установите ID текущего пользователя
-}
+
 
 void MainWindow::saveErrorToDatabase(int errorCode) {
-    // Сохранение ошибки в базу данных
-    int userId = currentUserId;
-    QString errorDescription = "Описание ошибки"; // Замените на реальное описание ошибки
-    ErrorWindow *errorWindow = new ErrorWindow(currentUserId,this); // Создайте экземпляр ErrorWindow
-    errorWindow->saveErrorToDatabase(userId, errorCode, errorDescription); // Сохраните ошибку
+    QSqlQuery query(db);
+    query.prepare("INSERT INTO errorlog (userid, errorcode, errordescription, timestamp) VALUES (:userid, :errorcode, :description, CURRENT_TIMESTAMP)");
 
-    // Уведомление пользователя
-    QMessageBox::warning(this, "Ошибка", QString("Произошла ошибка: %1").arg(errorCode));
+    query.bindValue(":userid", currentUserId); // Предполагается, что у вас есть переменная currentUserId
+    query.bindValue(":errorcode", errorCode);
+
+    // Определите описание ошибки на основе errorCode
+    QString errorDescription;
+    switch (errorCode) {
+    case 1:
+        errorDescription = "Низкое напряжение";
+        break;
+    case 2:
+        errorDescription = "Обрыв нулевого провода";
+        break;
+    case 3:
+        errorDescription = "Перегрузка двигателя";
+        break;
+    case 4:
+        errorDescription = "Короткое замыкание";
+        break;
+    case 5:
+        errorDescription = "Перегрузка инвертора";
+        break;
+    default:
+        errorDescription = "Неизвестная ошибка";
+        break;
+    }
+
+    query.bindValue(":description", errorDescription);
+
+    if (!query.exec()) {
+        qDebug() << "Ошибка при сохранении в errorlog:" << query.lastError().text();
+    } else {
+        qDebug() << "Ошибка сохранена в errorlog:" << errorCode;
+    }
 }
 
 

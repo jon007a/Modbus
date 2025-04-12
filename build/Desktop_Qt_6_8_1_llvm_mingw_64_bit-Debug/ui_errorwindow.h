@@ -199,9 +199,11 @@ public:
 "QDateEdit::up-button:disabled, QDateEdit::down-button:disabled {\n"
 "    background-color: #D9D9D9; /* \320\246\320\262\320\265\321\202 \321\204\320\276\320\275\320\260 \320\272\320\275\320\276\320\277\320\276\320\272 \320\277\321\200\320\270 \320\276\321\202\320\272\320\273\321\216\321\207\320\265\320\275\320\270\320\270 */\n"
 "}"));
+        endDateEdit->setMinimumDateTime(QDateTime(QDate(2025, 9, 14), QTime(0, 0, 0)));
         endDateEdit->setMaximumDate(QDate(2050, 12, 31));
-        endDateEdit->setMinimumDate(QDate(2024, 9, 14));
+        endDateEdit->setMinimumDate(QDate(2025, 9, 14));
         endDateEdit->setCalendarPopup(true);
+        endDateEdit->setDate(QDate(2025, 9, 14));
         exportButton = new QPushButton(ErrorWindow);
         exportButton->setObjectName("exportButton");
         exportButton->setGeometry(QRect(10, 210, 121, 31));

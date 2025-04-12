@@ -14,6 +14,10 @@ class Registration : public QDialog
 {
     Q_OBJECT
 
+
+signals:
+    void userRegistered(); // Сигнал для обновления списка пользователей
+
 public:
     explicit Registration(QWidget *parent = nullptr);
     ~Registration();

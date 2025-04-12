@@ -18,6 +18,7 @@ class Statistic : public QMainWindow
 public:
     explicit Statistic(QWidget *parent = nullptr);
     ~Statistic();
+    void loadUsers();
 
 signals:
     void userSelected(const QString &username);
@@ -26,7 +27,7 @@ signals:
 private slots:
 
     void selectUser();
-    void loadUsers();
+
 
 
 private:

@@ -144,6 +144,20 @@ void Registration::onRegisterClicked()
                  << "\nRole:" << role
                  << "\nActivation code:" << activationCode;
 
+        // Добавление новой строки в таблицу Employees
+        QSqlQuery employeeQuery(db);
+        employeeQuery.prepare(
+            "INSERT INTO Employees (username) VALUES (:username)"
+            );
+        employeeQuery.bindValue(":username", username);
+
+        if (!employeeQuery.exec()) {
+            qDebug() << "Ошибка при добавлении данных о сотруднике:" << employeeQuery.lastError().text();
+        }
+
+        // Обновляем список пользователей в Admin
+        emit userRegistered(); // Сигнал для обновления списка пользователей
+
         QMessageBox::information(this, "Успех", "Регистрация успешно завершена");
         accept();
     } else {

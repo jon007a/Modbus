@@ -62,7 +62,7 @@ private slots:
     void on_actionWarnings_triggered();
     void saveErrorToDatabase(int errorCode); // Метод для сохранения ошибки в БД
     void readErrorStatus();
-    void setCurrentUserr(int userId);
+    //void setCurrentUserr(int userId);
 
 
 signals:
@@ -86,6 +86,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
 
     QQuickWidget *qmlWidget; // Добавляем QQuickWidget как член класса
     QModbusClient *modbusDevice; //Клиент для работы с модбас

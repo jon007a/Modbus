@@ -5,6 +5,7 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QCryptographicHash>
+#include <registration.h>
 
 Statistic::Statistic(QWidget *parent) :
     QMainWindow(parent),
@@ -13,6 +14,9 @@ Statistic::Statistic(QWidget *parent) :
     ui->setupUi(this);
     setWindowIcon(QIcon("C:/Qt/Raboti/vfd/pictures/selection.png"));
     connect(ui->selectUserButton, &QPushButton::clicked, this, &Statistic::selectUser);
+
+
+
 
     // Инициализация базы данных и загрузка пользователей
     if (initDatabase()) {
@@ -27,6 +31,9 @@ Statistic::~Statistic()
     }
     delete ui;
 }
+
+
+
 
 bool Statistic::initDatabase()
 {
